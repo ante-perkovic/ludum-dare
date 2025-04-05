@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbbx1r7vk2ceu"]
+
+[ext_resource type="PackedScene" uid="uid://ut4nv5i3oc5s" path="res://Characters/npc.tscn" id="1_sslhw"]
+
+[node name="IntroLevel" type="Node2D"]
+
+[node name="NPC" parent="." instance=ExtResource("1_sslhw")]
+position = Vector2(129, 134)
