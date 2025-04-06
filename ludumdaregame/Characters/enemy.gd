@@ -7,6 +7,7 @@ extends CharacterBody2D
 var move_direction := Vector2.ZERO
 var is_moving := false
 var is_chasing := false
+var health:int = 100;
 
 @onready var behavior_timer := Timer.new()
 
@@ -73,3 +74,12 @@ func _change_direction():
 
 	directions.erase(move_direction)
 	move_direction = directions[randi() % directions.size()]
+
+func take_damage(amount: int):
+	health -= amount
+	if health <= 0:
+		die()
+
+func die():
+	# TODO: play animation
+	queue_free()
