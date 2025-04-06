@@ -1,0 +1,21 @@
+extends Node2D
+
+
+var velocity: Vector2 = Vector2.ZERO
+
+@export var speed = 500
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	position += velocity * delta
+
+# called when something enteres body
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	print("tu") # Replace with function body.
+
+# TODO:
+# destroy when out of map

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ut4nv5i3oc5s"]
 
 [ext_resource type="Script" uid="uid://8j6wn66otta5" path="res://Characters/npc.gd" id="1_32lk6"]
-[ext_resource type="Texture2D" uid="uid://b37yj21a2i5ax" path="res://Art/image.png" id="1_ideak"]
+[ext_resource type="Texture2D" uid="uid://b37yj21a2i5ax" path="res://Assets/image.png" id="1_ideak"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64dcp"]
 size = Vector2(12, 25)
