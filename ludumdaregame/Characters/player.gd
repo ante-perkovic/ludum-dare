@@ -56,8 +56,12 @@ func take_damage(amount: int):
 	health -= amount
 	if health <= 0:
 		die()
-	print(health)
+	update_health_bar()
 
 func die():
 	# TODO: play animation
 	queue_free()
+
+func update_health_bar():
+	var healthbar = get_node("CanvasLayer/HealthBar")
+	healthbar.value = health

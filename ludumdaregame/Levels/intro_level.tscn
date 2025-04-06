@@ -10,7 +10,7 @@
 position = Vector2(567, 284)
 
 [node name="Player" parent="." instance=ExtResource("2_isgbt")]
-position = Vector2(68, 63)
+position = Vector2(164, 277)
 
 [node name="Enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_dxy3b")]
 position = Vector2(516, 279)
