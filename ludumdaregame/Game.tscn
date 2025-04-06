@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cp7f5k2vmchb"]
+[gd_scene load_steps=6 format=3 uid="uid://cmkgwb33fuov"]
 
-[ext_resource type="Script" uid="uid://tq0kvxcrs8uo" path="res://game.gd" id="1_wbfu4"]
+[ext_resource type="Script" uid="uid://tq0kvxcrs8uo" path="res://scripts/game.gd" id="1_wbfu4"]
 [ext_resource type="Texture2D" uid="uid://cjmi31rl1p4xh" path="res://tiles/simple64x_tiles6.png" id="2_xkndl"]
+[ext_resource type="Script" uid="uid://dvdnk3v7x4nyg" path="res://scripts/generate_level.gd" id="3_u44n3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u44n3"]
 texture = ExtResource("2_xkndl")
@@ -173,3 +174,6 @@ tile_set = SubResource("TileSet_sb48q")
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+
+[node name="LevelGenerator" type="Node" parent="."]
+script = ExtResource("3_u44n3")
