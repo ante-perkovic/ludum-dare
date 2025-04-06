@@ -1,11 +1,11 @@
 [gd_scene load_steps=6 format=3 uid="uid://cmkgwb33fuov"]
 
 [ext_resource type="Script" uid="uid://tq0kvxcrs8uo" path="res://scripts/game.gd" id="1_wbfu4"]
-[ext_resource type="Texture2D" uid="uid://cjmi31rl1p4xh" path="res://tiles/simple64x_tiles6.png" id="2_xkndl"]
+[ext_resource type="Texture2D" uid="uid://cxo4hvf6kgm4u" path="res://Assets/tileset.png" id="2_u44n3"]
 [ext_resource type="Script" uid="uid://dvdnk3v7x4nyg" path="res://scripts/generate_level.gd" id="3_u44n3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u44n3"]
-texture = ExtResource("2_xkndl")
+texture = ExtResource("2_u44n3")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -160,6 +160,26 @@ texture = ExtResource("2_xkndl")
 17:7/0 = 0
 18:7/0 = 0
 19:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+4:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+8:8/0 = 0
+9:8/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+4:9/0 = 0
+5:9/0 = 0
+6:9/0 = 0
+7:9/0 = 0
+8:9/0 = 0
+9:9/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_sb48q"]
 physics_layer_0/collision_layer = 1
