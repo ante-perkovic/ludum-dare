@@ -19,7 +19,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64dcp"]
-size = Vector2(12, 25)
+size = Vector2(16, 30)
 
 [node name="NPC" type="CharacterBody2D" groups=["npc"]]
 script = ExtResource("1_32lk6")
@@ -28,5 +28,5 @@ script = ExtResource("1_32lk6")
 sprite_frames = SubResource("SpriteFrames_32lk6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -2.5)
+position = Vector2(1, 3)
 shape = SubResource("RectangleShape2D_64dcp")
