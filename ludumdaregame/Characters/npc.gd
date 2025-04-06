@@ -6,6 +6,9 @@ var is_moving := false  # Track if NPC is currently moving
 
 @onready var behavior_timer := Timer.new()
 @export var is_dreaming = false # Track if this npc is a special NPC that is dreaming
+@export var is_main_level = false # Will guarantee to recursiely go deeper and deeper
+
+var level_id = null
 
 func _ready():
 	randomize()
@@ -58,4 +61,8 @@ func _change_direction():
 	move_direction = directions[randi() % directions.size()]
 
 func enter_dream():
-	print("u snu...")
+	if level_id == null:
+		level_id = randi() + 1
+	var game_node = find_parent("Game")
+	game_node.enter_level(level_id)
+	
