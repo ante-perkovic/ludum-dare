@@ -3,7 +3,7 @@ extends Node2D
 
 var velocity: Vector2 = Vector2.ZERO
 
-@export var speed = 500
+@export var speed = 1000
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,7 +15,11 @@ func _process(delta: float) -> void:
 
 # called when something enteres body
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	print("tu") # Replace with function body.
+	# check if body is enemy
+	if body.is_in_group("enemy"):
+		body.take_damage(20)		
+		# destroy obj
+		queue_free()
 
 # TODO:
 # destroy when out of map
