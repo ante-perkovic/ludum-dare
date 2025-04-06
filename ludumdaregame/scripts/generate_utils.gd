@@ -15,6 +15,11 @@ class Tile:
 class NotCombineableException:
 	pass
 
+static func get_tile_type(tiles: Array, x: int, y: int) -> int:
+	if x < 0 or x >= tiles[0].size() or y < 0 or y >= tiles.size():
+		return TileType.OUTSIDE
+	return tiles[y][x].type
+
 static func put_tile(tiles, x, y, tile: Tile):
 	tiles[y][x] = tile
 
@@ -53,6 +58,7 @@ static func find_end_tiles(tiles):
 	return end_tiles
 
 static func get_end_orientation(tiles, x, y):
+	# Returns -1 if orientation cannot be found
 	if x < tiles[0].size() - 1 and tiles[y][x + 1].type == TileType.OUTSIDE:
 		return Orientation.RIGHT
 	if x > 0 and tiles[y][x - 1].type == TileType.OUTSIDE:
@@ -61,7 +67,6 @@ static func get_end_orientation(tiles, x, y):
 		return Orientation.TOP
 	if y > 0 and tiles[y - 1][x].type == TileType.OUTSIDE:
 		return Orientation.DOWN
-	push_error("NotCombineableException")
 	return -1
 
 static func parse_room(text: String):
@@ -107,15 +112,19 @@ static func add_margin(tiles, left := true, right := true, top := true, down := 
 static func surround_with_walls(tiles):
 	var height = tiles.size()
 	var width = tiles[0].size()
-	for y in range(1, height - 1):
-		for x in range(1, width - 1):
-			if tiles[y][x].type == TileType.FLOOR:
+	for y in range(height):
+		for x in range(width):
+			if tiles[y][x].type == TileType.OUTSIDE:
 				for dy in [-1, 0, 1]:
 					for dx in [-1, 0, 1]:
 						var ny = y + dy
 						var nx = x + dx
-						if tiles[ny][nx].type == TileType.OUTSIDE:
-							tiles[ny][nx] = Tile.new(TileType.WALL)
+						if get_tile_type(tiles, nx, ny) == TileType.FLOOR:
+							tiles[y][x] = Tile.new(TileType.WALL)
+				if get_tile_type(tiles, x-1, y) == TileType.FLOOR and get_tile_type(tiles, x+1, y) == TileType.FLOOR:
+					tiles[y][x] = Tile.new(TileType.FLOOR)
+				if get_tile_type(tiles, x, y-1) == TileType.FLOOR and get_tile_type(tiles, x, y+1) == TileType.FLOOR:
+					tiles[y][x] = Tile.new(TileType.FLOOR)
 
 static func get_dict_from_tiles(tiles, offset := Vector2(0, 0)):
 	var new_dict = {}
@@ -149,9 +158,11 @@ static func get_tiles_from_dict(dict):
 	return tiles
 
 static func combine_tiles_dicts(dict1, dict2):
+	# Return null if not combinable
 	for key in dict2.keys():
 		if dict1.has(key):
-			push_error("NotCombineableException")
+			if dict1[key].type == dict2[key].type:
+				continue
 			return null
 	var combined = dict1.duplicate()
 	for key in dict2.keys():
@@ -159,20 +170,28 @@ static func combine_tiles_dicts(dict1, dict2):
 	return combined
 
 static func combine_rooms(tiles_1, tiles_2):
+	# Returns null if not combineable
 	var dict1 = get_dict_from_tiles(tiles_1)
 	var ends = find_end_tiles(tiles_1)
 	ends.shuffle()
 	for end in ends:
 		var orientation = get_end_orientation(tiles_1, end.x, end.y)
+		if orientation == -1:
+			continue
 		var copy2 = []
 		for row in tiles_2:
-			copy2.append(row.duplicate(true))
+			var new_row = []
+			for tile in row:
+				new_row.append(tile)
+			copy2.append(new_row)
 		for i in range(orientation):
 			copy2 = rotate_tiles(copy2)
 		var starts = find_end_tiles(copy2)
 		starts.shuffle()
 		for start in starts:
 			var start_orientation = get_end_orientation(copy2, start.x, start.y)
+			if start_orientation == -1:
+				continue
 			if start_orientation != (orientation + 2) % 4:
 				continue
 			var offset = end - start
@@ -193,7 +212,6 @@ static func combine_rooms(tiles_1, tiles_2):
 			var result = combine_tiles_dicts(dict1, dict2)
 			if result != null:
 				return get_tiles_from_dict(result)
-	push_error("NotCombineableException")
 	return null
 
 static func draw_tiles(tiles):
