@@ -1,6 +1,7 @@
 extends CharacterBody2D
 @export var player_move_speed: float = 150
 @export var projectile_scene: PackedScene = preload("res://Characters/projectile.tscn")
+@export var weapon = preload("res://Weapons/Gun.tscn").instantiate()
 var health: int = 100
 
 var PLAYER_MOVE_SPEED_CROUCH = 50
@@ -44,6 +45,9 @@ func _input(event: InputEvent) -> void:
 		
 # function for shooting
 func shoot_projectile():
+	
+	if weapon.fire() == false:
+		return
 	
 	# create projectile and set its position
 	var projectile = projectile_scene.instantiate()
