@@ -20,7 +20,7 @@ func _physics_process(_delta):
 
 # checks input events
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("spacebar"):
+	if event.is_action_pressed("shoot"):
 		shoot_projectile()
 	if event.is_action_pressed("interact"):
 		interact_with_npc()
