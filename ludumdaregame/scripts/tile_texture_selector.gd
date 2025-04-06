@@ -13,8 +13,8 @@ static func get_tile_atlas_coords(tiles: Array, x: int, y: int) -> Vector2i:
 	var right := utils.get_tile_type(tiles, x + 1, y)
 	var top := utils.get_tile_type(tiles, x, y - 1)
 	var bottom := utils.get_tile_type(tiles, x, y + 1)
-	var top_left := utils.get_tile_type(tiles, x - 1, y - 1)
-	var top_right := utils.get_tile_type(tiles, x + 1, y - 1)
+	#var top_left := utils.get_tile_type(tiles, x - 1, y - 1)
+	#var top_right := utils.get_tile_type(tiles, x + 1, y - 1)
 	var bottom_left := utils.get_tile_type(tiles, x - 1, y + 1)
 	var bottom_right := utils.get_tile_type(tiles, x + 1, y + 1)
 

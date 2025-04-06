@@ -1,11 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmkgwb33fuov"]
+[gd_scene load_steps=7 format=3 uid="uid://cwpwwiqgj2v5l"]
 
-[ext_resource type="Script" uid="uid://tq0kvxcrs8uo" path="res://scripts/game.gd" id="1_wbfu4"]
-[ext_resource type="Texture2D" uid="uid://cxo4hvf6kgm4u" path="res://Assets/tileset.png" id="2_u44n3"]
-[ext_resource type="Script" uid="uid://dvdnk3v7x4nyg" path="res://scripts/generate_level.gd" id="3_u44n3"]
+[ext_resource type="Script" uid="uid://dvu7h7k0dvkwa" path="res://Scenes/level.gd" id="1_q1cbv"]
+[ext_resource type="PackedScene" uid="uid://cn2yww38pccv6" path="res://Characters/player.tscn" id="2_24c1m"]
+[ext_resource type="Texture2D" uid="uid://cxo4hvf6kgm4u" path="res://Assets/tileset.png" id="2_wbw1h"]
+[ext_resource type="Script" uid="uid://dvdnk3v7x4nyg" path="res://scripts/generate_level.gd" id="4_fuudy"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u44n3"]
-texture = ExtResource("2_u44n3")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_286st"]
+texture = ExtResource("2_wbw1h")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -181,19 +182,17 @@ texture = ExtResource("2_u44n3")
 8:9/0 = 0
 9:9/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_sb48q"]
+[sub_resource type="TileSet" id="TileSet_q1ycg"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_u44n3")
+sources/0 = SubResource("TileSetAtlasSource_286st")
 
-[node name="Game" type="Node2D"]
-script = ExtResource("1_wbfu4")
+[node name="Level" type="Node2D"]
+script = ExtResource("1_q1cbv")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_set = SubResource("TileSet_sb48q")
+tile_set = SubResource("TileSet_q1ycg")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="Player" parent="." instance=ExtResource("2_24c1m")]
 
 [node name="LevelGenerator" type="Node" parent="."]
-script = ExtResource("3_u44n3")
+script = ExtResource("4_fuudy")
