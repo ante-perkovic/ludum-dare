@@ -1,7 +1,7 @@
 extends Node
 
 enum TileType { OUTSIDE, WALL, FLOOR }
-enum RoomType { BIG, TOILET, SMALL }
+enum RoomType { BIG, SMALL }
 enum Orientation { TOP, LEFT, DOWN, RIGHT }
 
 class Tile:

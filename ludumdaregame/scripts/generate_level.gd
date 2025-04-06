@@ -30,39 +30,7 @@ func create_room_tiles(room_type: int) -> Array:
 	rng.randomize()
 	var tiles = []
 
-	if room_type == utils.RoomType.TOILET:
-		var toilet_width = rng.randi_range(1, 3)
-		var toilet_height = rng.randi_range(1, 2)
-		var toilets = rng.randi_range(3, 6)
-		var width = toilet_width + 1 + rng.randi_range(2, 4)
-		var height = (toilet_height + 1) * toilets - 1
-
-		tiles.resize(height)
-		for y in range(height):
-			tiles[y] = []
-			for x in range(width):
-				tiles[y].append(utils.Tile.new(utils.TileType.FLOOR))
-
-		utils.put_tile(tiles, toilet_width + 2, 0, utils.Tile.new(utils.TileType.FLOOR, true))
-		utils.put_tile(tiles, toilet_width + 2, height - 1, utils.Tile.new(utils.TileType.FLOOR, true))
-		utils.put_tile(tiles, width - 1, height / 3, utils.Tile.new(utils.TileType.FLOOR, true))
-		utils.put_tile(tiles, width - 1, 2 * height / 3, utils.Tile.new(utils.TileType.FLOOR, true))
-
-		for i in range(toilets):
-			if i != 0:
-				utils.put_tiles(
-					tiles,
-					Vector2(0, (toilet_height + 1) * i - 1),
-					Vector2(toilet_width, (toilet_height + 1) * i - 1),
-					utils.TileType.WALL
-				)
-			utils.put_tiles(
-				tiles,
-				Vector2(toilet_width, (toilet_height + 1) * i),
-				Vector2(toilet_width, (toilet_height + 1) * (i + 1) - 3),
-				utils.TileType.WALL
-			)
-	elif room_type == utils.RoomType.BIG:
+	if room_type == utils.RoomType.BIG:
 		var room_string = BIG_ROOMS[rng.randi_range(0, BIG_ROOMS.size() - 1)]
 		tiles = utils.parse_room(room_string)
 	elif room_type == utils.RoomType.SMALL:
@@ -76,16 +44,17 @@ func create_room_tiles(room_type: int) -> Array:
 
 func generate_level():
 	load_rooms()
+	var rng = RandomNumberGenerator.new()
 
 	var room = create_room_tiles(utils.RoomType.BIG)
 	room = utils.add_margin(room)
+	
+	var number_of_rooms = rng.randi_range(3, 6)
 
-	for i in range(5):
-		var rng = RandomNumberGenerator.new()
+	for i in range(number_of_rooms):
 		rng.randomize()
 		var roll = rng.randi_range(0, 99)
-		var room_type = utils.RoomType.BIG if roll < 40 else utils.RoomType.SMALL if roll < 70 else utils.RoomType.TOILET
-
+		var room_type = utils.RoomType.BIG if roll < 25 else utils.RoomType.SMALL
 		var new_room = create_room_tiles(room_type)
 		new_room = utils.add_margin(new_room)
 		var combined = null
