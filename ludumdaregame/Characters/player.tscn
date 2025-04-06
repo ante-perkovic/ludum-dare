@@ -35,4 +35,4 @@ offset_bottom = 38.0
 value = 100.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(4, 5)
+zoom = Vector2(4, 4)

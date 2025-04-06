@@ -65,9 +65,9 @@ func shoot_projectile():
 func interact_with_npc():
 	var nearby_npcs = $InteractionArea.get_overlapping_bodies()
 	for npc in nearby_npcs:
-		if npc.is_in_group("npc"):
-				npc.enter_dream()
-				return
+		if npc.is_in_group("npc") and npc.is_dreaming:
+			npc.enter_dream()
+			return
 
 func take_damage(amount: int):
 	health -= amount
@@ -76,7 +76,8 @@ func take_damage(amount: int):
 	update_health_bar()
 
 func die():
-	# TODO: play animation
+	var game_node = find_parent("Game")
+	game_node.return_to_previous_level()
 	queue_free()
 
 func update_health_bar():
