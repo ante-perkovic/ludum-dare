@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var enemy_move_speed: float = 150
 @export var detection_radius: float = 100.0  # Distance to start chasing
 @export var player: CharacterBody2D
+@export var projectile_scene: PackedScene = preload("res://Characters/projectile.tscn")
 
 var move_direction := Vector2.ZERO
 var is_moving := false
@@ -26,6 +27,8 @@ func _ready():
 		_change_direction()
 
 	behavior_timer.start()
+	
+	set_up_shooting_timer()
 
 func _physics_process(_delta):
 	if player:
@@ -74,12 +77,44 @@ func _change_direction():
 
 	directions.erase(move_direction)
 	move_direction = directions[randi() % directions.size()]
+	
+	shoot_projectile()
 
 func take_damage(amount: int):
 	health -= amount
 	if health <= 0:
 		die()
+	print(health)
 
 func die():
 	# TODO: play animation
 	queue_free()
+
+func set_up_shooting_timer():
+	var shoot_timer = Timer.new()
+	shoot_timer.wait_time = 2.0
+	shoot_timer.one_shot = false
+	shoot_timer.autostart = true
+	add_child(shoot_timer)
+	shoot_timer.timeout.connect(Callable(self, "shoot_projectile"))
+
+func shoot_projectile():
+	
+	# find a player
+	var player = get_tree().get_first_node_in_group("player")
+	if player == null:
+		return
+	# create projectile and set its position
+	var projectile = projectile_scene.instantiate()
+	projectile.source = self
+	projectile.global_position = global_position
+	
+	# compute direction of a player
+	var direction: Vector2 = (player.global_position - global_position).normalized()
+	
+	# set projectile velocity and rotate
+	projectile.velocity = direction * projectile.speed
+	projectile.rotation = direction.angle()
+	
+	# add projectile to scene tree
+	get_parent().add_child(projectile)

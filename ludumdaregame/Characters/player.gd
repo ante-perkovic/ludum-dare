@@ -1,6 +1,7 @@
 extends CharacterBody2D
 @export var player_move_speed: float = 150
 @export var projectile_scene: PackedScene = preload("res://Characters/projectile.tscn")
+var health: int = 100
 
 func _physics_process(_delta):
 	#Get input direction
@@ -29,6 +30,7 @@ func shoot_projectile():
 	
 	# create projectile and set its position
 	var projectile = projectile_scene.instantiate()
+	projectile.source = self
 	projectile.global_position = global_position
 	
 	# calc projectile direction
@@ -49,3 +51,13 @@ func interact_with_npc():
 		if npc.is_in_group("npc"):
 				npc.enter_dream()
 				return
+
+func take_damage(amount: int):
+	health -= amount
+	if health <= 0:
+		die()
+	print(health)
+
+func die():
+	# TODO: play animation
+	queue_free()
