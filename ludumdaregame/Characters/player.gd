@@ -8,6 +8,34 @@ var PLAYER_MOVE_SPEED_CROUCH = 50
 var PLAYER_MOVE_SPEED_DEFAULT = 150
 var PLAYER_MOVE_SPEED_SPRINT = 225
 
+@onready var _animated_sprite = $AnimatedSprite2D
+
+var _last_position: Vector2
+
+func _process(_delta):
+	var velocity = Vector2.ZERO
+	if Input.is_action_pressed("right"):
+		velocity.x += 1
+	elif Input.is_action_pressed("left"):
+		velocity.x -= 1
+	if Input.is_action_pressed("down"):
+		velocity.y += 1
+	elif Input.is_action_pressed("up"):
+		velocity.y -= 1
+		
+	if abs(velocity.x) > 0.1:
+		_animated_sprite.flip_h = velocity.x > 0
+	if velocity.length() > 0.1:
+		if _animated_sprite.animation != "running":
+			_animated_sprite.play("running")
+	else:
+		if _animated_sprite.animation != "default":
+			_animated_sprite.play("default")
+	_last_position = global_position
+
+func _ready():
+	_last_position = global_position
+
 func _physics_process(_delta):
 	#Get input direction
 	var input_direction = Vector2(

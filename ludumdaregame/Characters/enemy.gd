@@ -11,8 +11,23 @@ var is_chasing := false
 var health:int = 100;
 
 @onready var behavior_timer := Timer.new()
+@onready var _animated_sprite = $AnimatedSprite2D
+var _last_position: Vector2
 
+func _process(_delta):
+	var velocity = (global_position - _last_position) / _delta
+	if abs(velocity.x) > 0.1:
+		_animated_sprite.flip_h = velocity.x > 0
+	if velocity.length() > 0.1:
+		if _animated_sprite.animation != "running":
+			_animated_sprite.play("running")
+	else:
+		if _animated_sprite.animation != "default":
+			_animated_sprite.play("default")
+	_last_position = global_position
+	
 func _ready():
+	_last_position = global_position
 	randomize()
 
 	# Timer setup
@@ -94,7 +109,7 @@ func set_up_shooting_timer():
 	shoot_timer.one_shot = false
 	shoot_timer.autostart = true
 	add_child(shoot_timer)
-	#shoot_timer.timeout.connect(Callable(self, "shoot_projectile"))
+	shoot_timer.timeout.connect(Callable(self, "shoot_projectile"))
 
 func shoot_projectile():
 	# find a player
