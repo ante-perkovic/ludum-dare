@@ -55,3 +55,6 @@ func _change_direction():
 
 	directions.erase(move_direction)
 	move_direction = directions[randi() % directions.size()]
+
+func enter_dream():
+	print("u snu...")
