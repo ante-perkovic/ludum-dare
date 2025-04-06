@@ -16,7 +16,6 @@ func _input(event):
 
 func _create_new_level():
 	if current_level:
-		#current_level.pause_mode = Node.PROCESS_MODE_PAUSABLE
 		current_level.set_process(false)
 		get_tree().paused = true
 		level_stack.append(current_level)

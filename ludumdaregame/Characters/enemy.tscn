@@ -1,18 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://crv52otjvhjtb"]
+[gd_scene load_steps=6 format=3 uid="uid://crv52otjvhjtb"]
 
 [ext_resource type="Script" uid="uid://esujh4ng0sxw" path="res://Characters/enemy.gd" id="1_rtu5t"]
-[ext_resource type="Texture2D" uid="uid://b37yj21a2i5ax" path="res://Assets/image.png" id="2_sdfay"]
+[ext_resource type="Texture2D" uid="uid://tycrpea0s6w8" path="res://Assets/characters.png" id="2_rtu5t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtu5t"]
+atlas = ExtResource("2_rtu5t")
+region = Rect2(0, 96, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kptum"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtu5t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rtu5t"]
+size = Vector2(15, 20)
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
 script = ExtResource("1_rtu5t")
+enemy_move_speed = 30.0
 
-[node name="Sprite2D" type="Sprite2D" parent="." groups=["enemy"]]
-texture = ExtResource("2_sdfay")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemy"]]
-shape = SubResource("RectangleShape2D_rtu5t")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kptum")
+centered = false
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -35.0
@@ -20,3 +35,6 @@ offset_top = 17.0
 offset_right = 38.0
 offset_bottom = 44.0
 value = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemy"]]
+shape = SubResource("RectangleShape2D_rtu5t")

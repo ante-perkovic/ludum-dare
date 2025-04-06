@@ -7,7 +7,7 @@ const utils = preload("./generate_utils.gd")
 static func get_random_texture(options: Array) -> Vector2i:
 	return options[randi() % options.size()]
 
-static func get_tile_atlas_coords(tiles: Array, x: int, y: int) -> Vector2i:
+static func get_tile_texture_coords(tiles: Array, x: int, y: int) -> Vector2i:
 	var current := utils.get_tile_type(tiles, x, y)
 	var left := utils.get_tile_type(tiles, x - 1, y)
 	var right := utils.get_tile_type(tiles, x + 1, y)

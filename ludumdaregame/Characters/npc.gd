@@ -5,6 +5,7 @@ var move_direction := Vector2.ZERO
 var is_moving := false  # Track if NPC is currently moving
 
 @onready var behavior_timer := Timer.new()
+@export var is_dreaming = false # Track if this npc is a special NPC that is dreaming
 
 func _ready():
 	randomize()

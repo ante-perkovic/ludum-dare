@@ -1,17 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://bl2fh1rdgax3c"]
+[gd_scene load_steps=5 format=3 uid="uid://bl2fh1rdgax3c"]
 
 [ext_resource type="Script" uid="uid://bk1tb0ktmsk5t" path="res://Characters/projectile.gd" id="1_cquv2"]
+[ext_resource type="Texture2D" uid="uid://tycrpea0s6w8" path="res://Assets/characters.png" id="2_5jp1e"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5jp1e"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0cff"]
+atlas = ExtResource("2_5jp1e")
+region = Rect2(176, 24, 16, 8)
+
 [node name="Projectile" type="Node2D"]
 script = ExtResource("1_cquv2")
+speed = 300
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_5jp1e")
 debug_color = Color(0.939871, 0.168677, 0.454205, 0.42)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_n0cff")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="tree_entered" from="Area2D/CollisionShape2D" to="." method="_on_collision_shape_2d_tree_entered"]
