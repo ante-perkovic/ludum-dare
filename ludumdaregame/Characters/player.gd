@@ -3,6 +3,10 @@ extends CharacterBody2D
 @export var projectile_scene: PackedScene = preload("res://Characters/projectile.tscn")
 var health: int = 100
 
+var PLAYER_MOVE_SPEED_CROUCH = 50
+var PLAYER_MOVE_SPEED_DEFAULT = 150
+var PLAYER_MOVE_SPEED_SPRINT = 225
+
 func _physics_process(_delta):
 	#Get input direction
 	var input_direction = Vector2(
@@ -20,10 +24,23 @@ func _physics_process(_delta):
 
 # checks input events
 func _input(event: InputEvent) -> void:
+	
+	# action - shoot
 	if event.is_action_pressed("shoot"):
 		shoot_projectile()
+	
+	# action - interact
 	if event.is_action_pressed("interact"):
 		interact_with_npc()
+	
+	# action - crouch
+	if event.is_action_pressed("crouch"):
+		$CollisionShape2D.shape.set_size(Vector2(12, 10))
+		player_move_speed = PLAYER_MOVE_SPEED_CROUCH
+		
+	if event.is_action_released("crouch"):
+		$CollisionShape2D.shape.set_size(Vector2(12, 25))
+		player_move_speed = PLAYER_MOVE_SPEED_DEFAULT
 		
 # function for shooting
 func shoot_projectile():

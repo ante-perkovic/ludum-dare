@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cy2fyjv64so4l" path="res://Characters/player.gd" id="1_eovys"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5mj4t"]
-size = Vector2(14, 14)
+size = Vector2(12.5, 26)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eovys"]
 radius = 58.0
@@ -16,10 +16,11 @@ script = ExtResource("1_eovys")
 texture = ExtResource("1_5mj4t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
-position = Vector2(0.5, -3)
+position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_5mj4t")
 
 [node name="InteractionArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("CircleShape2D_eovys")
