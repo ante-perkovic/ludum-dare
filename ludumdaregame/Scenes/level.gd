@@ -53,8 +53,8 @@ func create_level():
 		add_child(npc)
 
 	# Spawn enemies (not too close to player)
-	var num_enemies = 0 # randi() % 6 + 3
-	var min_distance = 4.0  # tiles
+	var num_enemies = randi() % 6 + 3
+	var min_distance = 4  # tiles
 
 	for i in num_enemies:
 		if floor_tiles.is_empty(): break

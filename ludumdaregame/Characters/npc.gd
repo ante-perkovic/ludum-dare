@@ -8,9 +8,25 @@ var is_moving := false  # Track if NPC is currently moving
 @export var is_dreaming = false # Track if this npc is a special NPC that is dreaming
 @export var is_main_level = false # Will guarantee to recursiely go deeper and deeper
 
+
 var level_id = null
+@onready var _animated_sprite = $AnimatedSprite2D
+var _last_position: Vector2
+
+func _process(_delta):
+	var velocity = (global_position - _last_position) / _delta
+	if abs(velocity.x) > 0.1:
+		_animated_sprite.flip_h = velocity.x > 0
+	if velocity.length() > 0.1:
+		if _animated_sprite.animation != "running":
+			_animated_sprite.play("running")
+	else:
+		if _animated_sprite.animation != "default":
+			_animated_sprite.play("default")
+	_last_position = global_position
 
 func _ready():
+	_last_position = global_position
 	randomize()
 
 	# Set up the behavior timer
