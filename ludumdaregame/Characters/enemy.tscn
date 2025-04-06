@@ -13,3 +13,10 @@ texture = ExtResource("2_sdfay")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemy"]]
 shape = SubResource("RectangleShape2D_rtu5t")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -35.0
+offset_top = 17.0
+offset_right = 38.0
+offset_bottom = 44.0
+value = 100.0

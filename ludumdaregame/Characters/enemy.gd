@@ -84,7 +84,7 @@ func take_damage(amount: int):
 	health -= amount
 	if health <= 0:
 		die()
-	print(health)
+	update_health_bar()
 
 func die():
 	# TODO: play animation
@@ -118,3 +118,8 @@ func shoot_projectile():
 	
 	# add projectile to scene tree
 	get_parent().add_child(projectile)
+
+
+func update_health_bar():
+	var healthbar = get_node("HealthBar")
+	healthbar.value = health
