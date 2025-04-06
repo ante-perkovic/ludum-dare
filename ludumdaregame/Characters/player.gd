@@ -21,6 +21,8 @@ func _physics_process(_delta):
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("spacebar"):
 		shoot_projectile()
+	if event.is_action_pressed("interact"):
+		interact_with_npc()
 		
 # function for shooting
 func shoot_projectile():
@@ -39,3 +41,11 @@ func shoot_projectile():
 	
 	# add projectile to scene tree
 	get_parent().add_child(projectile)
+
+# checks if there are NPCs nearby and enters their dream
+func interact_with_npc():
+	var nearby_npcs = $InteractionArea.get_overlapping_bodies()
+	for npc in nearby_npcs:
+		if npc.is_in_group("npc"):
+				npc.enter_dream()
+				return
