@@ -16,19 +16,17 @@ func _process(delta: float) -> void:
 
 # called when something enteres body
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	
+	# you cannot hit yourself
 	if body == source:
 		return
 	
-	# check if body is enemy
-	if body.is_in_group("enemy"):
-		body.take_damage(20)
-		queue_free()
-	
-	if body.is_in_group("player"):
+	# check if body is enemy or player - take damage
+	if body.is_in_group("enemy") or body.is_in_group("player"):
 		body.take_damage(20)
 	
-		# destroy obj
-		queue_free()
+	# destroy projectile
+	queue_free()
 
 # TODO:
 # destroy when out of map
