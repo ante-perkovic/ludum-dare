@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="ludumDareGame"
-run/main_scene="uid://cn2yww38pccv6"
+run/main_scene="uid://bbbx1r7vk2ceu"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[global_group]
+
+enemy="for enemies"
 
 [input]
 
