@@ -77,8 +77,6 @@ func _change_direction():
 
 	directions.erase(move_direction)
 	move_direction = directions[randi() % directions.size()]
-	
-	shoot_projectile()
 
 func take_damage(amount: int):
 	health -= amount
@@ -96,10 +94,9 @@ func set_up_shooting_timer():
 	shoot_timer.one_shot = false
 	shoot_timer.autostart = true
 	add_child(shoot_timer)
-	shoot_timer.timeout.connect(Callable(self, "shoot_projectile"))
+	#shoot_timer.timeout.connect(Callable(self, "shoot_projectile"))
 
 func shoot_projectile():
-	
 	# find a player
 	var player = get_tree().get_first_node_in_group("player")
 	if player == null:

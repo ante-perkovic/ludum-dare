@@ -21,7 +21,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	
 	# check if body is enemy
 	if body.is_in_group("enemy"):
-		print("A")
 		body.take_damage(20)
 		queue_free()
 	
