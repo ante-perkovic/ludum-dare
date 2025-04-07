@@ -13,6 +13,7 @@ var level_id = null
 var npc_name = null
 @onready var _name_label = $NameLabel
 @onready var _animated_sprite = $AnimatedSprite2D
+@onready var _animated_interaction = $AnimatedInteraction
 var _last_position: Vector2
 	
 
@@ -45,17 +46,16 @@ func _process(_delta):
 	if len(players) > 0:
 		var player = players[0]
 		var npcs = player.get_overlapping_npcs()
-		var label = get_node("Label")
 		var is_overlapping = false
 		for i in npcs:
 			if i == self:
 				is_overlapping = true
 				break
 		if is_overlapping:
-			label.text = "E"
-			label.show()
+			_animated_interaction.play("default")
+			_animated_interaction.show()
 		else:
-			label.hide()
+			_animated_interaction.hide()
 
 func _body_entered(body: Node2D)->void:
 	print(body)
