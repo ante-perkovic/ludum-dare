@@ -100,6 +100,8 @@ func shoot_projectile():
 	# calc projectile direction
 	var target: Vector2 = get_global_mouse_position()
 	var direction: Vector2 = (target-global_position).normalized()
+	var rng = RandomNumberGenerator.new()
+	direction = direction.rotated(deg_to_rad(rng.randf_range(-weapon.spread_angle_degrees, weapon.spread_angle_degrees)))
 	
 	# set projectile velocity and rotate
 	projectile.velocity = direction * projectile.speed

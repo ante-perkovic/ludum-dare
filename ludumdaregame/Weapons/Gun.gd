@@ -2,6 +2,7 @@ extends Node2D
 
 @export var damage: int = 10
 @export var rate_of_fire: int = 1
+@export var spread_angle_degrees: float = 20.0
 var can_fire: bool = true
 var shoot_timer: Timer = null
 
