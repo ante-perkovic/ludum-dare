@@ -5,12 +5,29 @@ var move_direction := Vector2.ZERO
 var is_moving := false  # Track if NPC is currently moving
 
 @onready var behavior_timer := Timer.new()
-@export var is_dreaming = false # Track if this npc is a special NPC that is dreaming
-@export var is_main_level = false # Will guarantee to recursiely go deeper and deeper
+var is_dreaming = false # Track if this npc is a special NPC that is dreaming
+var current_depth = 0  # Unused if is_dreaming = false
+var allowed_depth = 0  # Unused if is_dreaming = false
 
 var level_id = null
+var npc_name = null
+@onready var _name_label = $NameLabel
 @onready var _animated_sprite = $AnimatedSprite2D
 var _last_position: Vector2
+	
+
+func set_npc_name(name: String) -> void:
+	npc_name = name
+	if _name_label:
+		_name_label.text = npc_name
+		_name_label.visible = true
+		# TODO: Maknuti boje kasnije vjerojatno
+		if allowed_depth == -1:
+			_name_label.modulate = Color(1, 0, 0)
+		if is_dreaming and allowed_depth == 0:
+			_name_label.modulate = Color(1, 1, 0.3)
+		if is_dreaming and allowed_depth == 1:
+			_name_label.modulate = Color(0.5, 1, 0.5)
 
 func _process(_delta):
 	var velocity = (global_position - _last_position) / _delta
@@ -43,6 +60,8 @@ func _body_entered(body: Node2D)->void:
 
 func _ready():
 	_last_position = global_position
+	if npc_name:
+		set_npc_name(npc_name)
 	randomize()
 
 	# Set up the behavior timer
@@ -98,5 +117,5 @@ func enter_dream():
 	if level_id == null:
 		level_id = randi() + 1
 	var game_node = find_parent("Game")
-	game_node.enter_level(level_id)
+	game_node.enter_level(level_id, self)
 	

@@ -4,6 +4,7 @@ extends CharacterBody2D
 
 
 var health: int = 100
+var coins: int = 0
 
 @export var player_move_speed: float = 150
 var PLAYER_MOVE_SPEED_CROUCH = 50
@@ -107,6 +108,8 @@ func shoot_projectile():
 	# calc projectile direction
 	var target: Vector2 = get_global_mouse_position()
 	var direction: Vector2 = (target-global_position).normalized()
+	var rng = RandomNumberGenerator.new()
+	direction = direction.rotated(deg_to_rad(rng.randf_range(-weapon.spread_angle_degrees, weapon.spread_angle_degrees)))
 	
 	# set projectile velocity and rotate
 	projectile.velocity = direction * projectile.speed
@@ -147,3 +150,6 @@ func die():
 func update_health_bar():
 	var healthbar = get_node("CanvasLayer/HealthBar")
 	healthbar.value = health
+
+func add_coin():
+	coins += 1
