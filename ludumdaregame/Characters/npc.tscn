@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://ut4nv5i3oc5s"]
+[gd_scene load_steps=14 format=3 uid="uid://ut4nv5i3oc5s"]
 
 [ext_resource type="Script" uid="uid://8j6wn66otta5" path="res://Characters/npc.gd" id="1_32lk6"]
+[ext_resource type="FontFile" uid="uid://bybbrkbohplev" path="res://Assets/Fonts/ByteBounce.ttf" id="2_32lk6"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_04wy3"]
 load_path = "res://.godot/imported/characters.png-b3722e77d80a2c5d1718add7ba80e281.ctex"
@@ -79,6 +80,7 @@ size = Vector2(16, 30)
 
 [node name="NPC" type="CharacterBody2D" groups=["npc"]]
 script = ExtResource("1_32lk6")
+npc_move_speed = 50.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_32lk6")
@@ -87,3 +89,13 @@ animation = &"running"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 3)
 shape = SubResource("RectangleShape2D_64dcp")
+
+[node name="NameLabel" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -17.0
+offset_right = 60.0
+offset_bottom = 3.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("2_32lk6")
+text = "HELLO"
+horizontal_alignment = 1
