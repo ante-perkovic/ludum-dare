@@ -1,8 +1,8 @@
 extends Node2D
 
 @export var damage: int = 10
-@export var rate_of_fire: int = 1
-@export var spread_angle_degrees: float = 20.0
+@export var rate_of_fire: float = 4.0
+@export var spread_angle_degrees: float = 7.0
 @export var weapon_name: String = 'gun'
 
 var can_fire: bool = true
@@ -21,7 +21,7 @@ func fire() -> bool:
 		can_fire = false
 		
 		var shoot_timer = Timer.new()
-		shoot_timer.wait_time = 1 / rate_of_fire
+		shoot_timer.wait_time = 1.0 / rate_of_fire
 		shoot_timer.one_shot = true
 		shoot_timer.autostart = true
 		shoot_timer.timeout.connect(Callable(self, "reload"))

@@ -76,7 +76,7 @@ func create_level(current_depth, allowed_depth):
 	spawn_enemies(enemy_scene, floor_tiles, backgroundLayer, player.global_position, randi() % 6 + 3, 4)
 	
 	# Spawn weapons
-	spawn_weapons(weapon_scenes.pick_random(), floor_tiles, backgroundLayer, player.global_position, 2, 4)
+	# spawn_weapons(weapon_scenes.pick_random(), floor_tiles, backgroundLayer, player.global_position, 2, 4)
 	
 	# Spawn coins
 	spawn_coins(coin_scene, floor_tiles, backgroundLayer, player.global_position, 20, 3)
