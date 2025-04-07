@@ -87,6 +87,7 @@ offset_bottom = 11.4
 texture = ExtResource("3_kldst")
 
 [node name="GameOver" type="Control" parent="GameInterfaceCanvas/MarginContainer"]
+visible = false
 z_index = 10
 layout_mode = 2
 
