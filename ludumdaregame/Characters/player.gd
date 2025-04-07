@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var projectile_scene: PackedScene = preload("res://Characters/projectile.tscn")
 @export var weapon = preload("res://Weapons/Gun.tscn").instantiate()
 var health: int = 100
+var coins: int = 0
 
 var PLAYER_MOVE_SPEED_CROUCH = 50
 var PLAYER_MOVE_SPEED_DEFAULT = 150
@@ -136,4 +137,4 @@ func update_health_bar():
 	healthbar.value = health
 
 func add_coin():
-	print("coin added")
+	coins += 1
