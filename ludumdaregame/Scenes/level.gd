@@ -20,7 +20,6 @@ func create_level(current_depth, allowed_depth):
 	var coin_scene = preload("res://Collectibles/Coin/coin.tscn")
 	var heart_scene = preload("res://Collectibles/Heart/Heart.tscn")
 	var weapon_scenes = [
-		preload("res://Weapons/Gun.tscn"),
 		preload("res://Weapons/AssaultRifle.tscn"),
 		preload("res://Weapons/Shotgun.tscn"),
 	]
