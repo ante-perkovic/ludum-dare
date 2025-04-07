@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://b548r4468jnyn"]
+[gd_scene load_steps=3 format=3 uid="uid://b548r4468jnyn"]
 
 [ext_resource type="Script" uid="uid://cqdbns6le0hmi" path="res://Weapons/AssaultRifle.gd" id="1_11qg3"]
+[ext_resource type="Texture2D" uid="uid://bhe2camewxumh" path="res://icon.svg" id="2_atr2k"]
 
 [node name="AssaultRifle" type="Node2D"]
 script = ExtResource("1_11qg3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0.499996, 0.5)
+scale = Vector2(0.398438, 0.195313)
+texture = ExtResource("2_atr2k")

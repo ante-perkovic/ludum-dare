@@ -15,6 +15,11 @@ func create_level(current_depth, allowed_depth):
 	var npc_scene = preload("res://Characters/npc.tscn")
 	var enemy_scene = preload("res://Characters/enemy.tscn")
 	var coin_scene = preload("res://Collectibles/Coin/coin.tscn")
+	var weapon_scenes = [
+		preload("res://Weapons/Gun.tscn"),
+		preload("res://Weapons/AssaultRifle.tscn"),
+		preload("res://Weapons/SubmachineGun.tscn"),
+	]
 	var background_margin = 100
 
 	var floor_tiles: Array[Vector2i] = []
@@ -60,6 +65,10 @@ func create_level(current_depth, allowed_depth):
 	# Spawn enemies
 	spawn_enemies(enemy_scene, floor_tiles, tileMapLayer, player.global_position, randi() % 6 + 3, 4)
 	
+	# Spawn weapons
+	spawn_weapons(weapon_scenes.pick_random(), floor_tiles, tileMapLayer, player.global_position, 2, 4)
+	
+	# Spawn coins
 	spawn_coins(coin_scene, floor_tiles, tileMapLayer, player.global_position, 20, 3)
 
 func set_random_name_list() -> void:
@@ -124,3 +133,18 @@ func spawn_coins(coin_scene, floor_tiles, tile_map, player_pos, count, min_dista
 				break
 		coin.global_position = tile_map.map_to_local(pos)
 		add_child(coin)
+
+func spawn_weapons(weapon_scene, floor_tiles, tile_map, player_pos, count, min_distance):
+	for i in count:
+		if floor_tiles.is_empty(): break
+		var weapon = weapon_scene.instantiate()
+		var pos: Vector2i
+
+		while true:
+			if floor_tiles.is_empty(): break
+			pos = get_random_floor_tile(floor_tiles)
+			var dist = player_pos.distance_to(tile_map.map_to_local(pos)) / tile_map.tile_set.tile_size.x
+			if dist > min_distance:
+				break
+		weapon.global_position = tile_map.map_to_local(pos)
+		add_child(weapon)
