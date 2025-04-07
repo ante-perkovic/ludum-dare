@@ -13,6 +13,7 @@ var health:int = 100;
 @onready var behavior_timer := Timer.new()
 @onready var _animated_sprite = $AnimatedSprite2D
 var _last_position: Vector2
+@onready var _healthbar = $HealthBar
 
 func _process(_delta):
 	var velocity = (global_position - _last_position) / _delta
@@ -101,6 +102,8 @@ func take_damage(amount: int):
 	update_health_bar()
 
 func die():
+	var game = find_parent("Game")
+	game.score += game.SCORE_KILL
 	# TODO: play animation
 	queue_free()
 
@@ -134,5 +137,8 @@ func shoot_projectile():
 
 
 func update_health_bar():
-	var healthbar = get_node("HealthBar")
-	healthbar.text  = str(health)
+	if health == 100:
+		_healthbar.visible = false
+	else:
+		_healthbar.visible = true		
+	_healthbar.set_value_no_signal(health)

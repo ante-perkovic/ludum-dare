@@ -19,13 +19,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_kldst")
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 
 [node name="GameInterface" type="Control" parent="GameInterfaceCanvas/MarginContainer"]
 layout_mode = 2
-theme = ExtResource("2_kldst")
 script = ExtResource("2_j5yw3")
 
 [node name="TopRightBox" type="VBoxContainer" parent="GameInterfaceCanvas/MarginContainer/GameInterface"]
@@ -85,3 +85,55 @@ offset_top = -1.6
 offset_right = 7.8
 offset_bottom = 11.4
 texture = ExtResource("3_kldst")
+
+[node name="GameOver" type="Control" parent="GameInterfaceCanvas/MarginContainer"]
+visible = false
+z_index = 10
+layout_mode = 2
+
+[node name="GameOverLabel" type="Label" parent="GameInterfaceCanvas/MarginContainer/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -159.0
+offset_top = -140.0
+offset_right = 161.0
+offset_bottom = -85.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 80
+text = "Game over!"
+
+[node name="ScoreContainer" type="VBoxContainer" parent="GameInterfaceCanvas/MarginContainer/GameOver"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -174.0
+offset_top = 81.0
+offset_right = 174.0
+offset_bottom = 151.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="GameInterfaceCanvas/MarginContainer/GameOver/ScoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Score: 1200"
+horizontal_alignment = 3
+
+[node name="DepthLabel" type="Label" parent="GameInterfaceCanvas/MarginContainer/GameOver/ScoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Max dream depth: 5"
+horizontal_alignment = 3

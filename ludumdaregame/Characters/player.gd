@@ -149,13 +149,17 @@ func take_damage(amount: int):
 		die()
 
 func die():
-	var game_node = find_parent("Game")
-	game_node.return_to_previous_level()
-	queue_free()
+	var game = find_parent("Game")
+	game.return_to_previous_level()
+	if len(game.level_stack):
+		queue_free()
+	else:
+		game.game_over()
 
 func add_coin():
 	coins += 1
-	# update coin bar
+	var game = find_parent("Game")
+	game.score += game.SCORE_COIN
 
 func add_health():
 	health += 1
