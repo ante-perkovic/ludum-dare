@@ -168,5 +168,5 @@ func add_health():
 
 func _on_weapon_pickup_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("weapon"):
-		push_error("fire must be implemented!")
+		push_error("pickup must be implemented!")
 		weapon = body.instantiate_weapon()
