@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var damage: int = 10
-@export var rate_of_fire: int = 1
+@export var rate_of_fire: int = 4
 var can_fire: bool = true
 var shoot_timer: Timer = null
 
@@ -9,7 +9,7 @@ var shoot_timer: Timer = null
 func _ready() -> void:
 	pass # Replace with function body.
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+# Called every frame. 'delta' is the elapsed time since the previous frame
 func _process(delta: float) -> void:
 	pass
 
