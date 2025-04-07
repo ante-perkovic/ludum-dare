@@ -1,42 +1,61 @@
-[gd_scene load_steps=15 format=3 uid="uid://cn2yww38pccv6"]
+[gd_scene load_steps=20 format=3 uid="uid://cn2yww38pccv6"]
 
 [ext_resource type="Script" uid="uid://cy2fyjv64so4l" path="res://Characters/player.gd" id="1_eovys"]
-[ext_resource type="Texture2D" uid="uid://tycrpea0s6w8" path="res://Assets/characters.png" id="2_eovys"]
+[ext_resource type="Texture2D" uid="uid://b37yj21a2i5ax" path="res://Assets/characters.png" id="2_eovys"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_04wy3"]
+load_path = "res://.godot/imported/characters.png-b3722e77d80a2c5d1718add7ba80e281.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vb825"]
-atlas = ExtResource("2_eovys")
+atlas = SubResource("CompressedTexture2D_04wy3")
 region = Rect2(0, 96, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_65n15"]
-atlas = ExtResource("2_eovys")
+atlas = SubResource("CompressedTexture2D_04wy3")
 region = Rect2(16, 96, 16, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l48on"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_eovys"]
 atlas = ExtResource("2_eovys")
+region = Rect2(176, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_642pg"]
+atlas = ExtResource("2_eovys")
+region = Rect2(192, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6x5r"]
+atlas = ExtResource("2_eovys")
+region = Rect2(208, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22qw1"]
+atlas = ExtResource("2_eovys")
+region = Rect2(224, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l48on"]
+atlas = SubResource("CompressedTexture2D_04wy3")
 region = Rect2(32, 96, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4m0gv"]
-atlas = ExtResource("2_eovys")
+atlas = SubResource("CompressedTexture2D_04wy3")
 region = Rect2(48, 96, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p728j"]
-atlas = ExtResource("2_eovys")
+atlas = SubResource("CompressedTexture2D_04wy3")
 region = Rect2(64, 96, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5slg2"]
-atlas = ExtResource("2_eovys")
+atlas = SubResource("CompressedTexture2D_04wy3")
 region = Rect2(80, 96, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cbmiu"]
-atlas = ExtResource("2_eovys")
+atlas = SubResource("CompressedTexture2D_04wy3")
 region = Rect2(96, 96, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w3rah"]
-atlas = ExtResource("2_eovys")
+atlas = SubResource("CompressedTexture2D_04wy3")
 region = Rect2(112, 96, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c4gpq"]
-atlas = ExtResource("2_eovys")
+atlas = SubResource("CompressedTexture2D_04wy3")
 region = Rect2(128, 96, 16, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_642pg"]
@@ -50,6 +69,23 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eovys")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_642pg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6x5r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22qw1")
+}],
+"loop": true,
+"name": &"interact",
 "speed": 5.0
 }, {
 "frames": [{
@@ -90,7 +126,7 @@ script = ExtResource("1_eovys")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_642pg")
-animation = &"running"
+animation = &"interact"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
 position = Vector2(2, 9)

@@ -11,6 +11,7 @@ var PLAYER_MOVE_SPEED_SPRINT = 225
 @onready var _animated_sprite = $AnimatedSprite2D
 
 var _last_position: Vector2
+var _is_interacting: bool
 
 func _process(_delta):
 	var velocity = Vector2.ZERO
@@ -25,12 +26,16 @@ func _process(_delta):
 		
 	if abs(velocity.x) > 0.1:
 		_animated_sprite.flip_h = velocity.x > 0
-	if velocity.length() > 0.1:
-		if _animated_sprite.animation != "running":
-			_animated_sprite.play("running")
+	if _is_interacting:
+		_animated_sprite.play("interact")
 	else:
-		if _animated_sprite.animation != "default":
-			_animated_sprite.play("default")
+		if velocity.length() > 0.1:
+			if _animated_sprite.animation != "running":
+				_animated_sprite.play("running")
+		else:
+			if _animated_sprite.animation != "default":
+				_animated_sprite.play("default")
+	
 	_last_position = global_position
 
 func _ready():
@@ -51,6 +56,15 @@ func _physics_process(_delta):
 	#Move and Slide function uses velocity or character body to move the character on map
 	move_and_slide()
 
+func set_up_interact_timer():
+	var interact_timer = Timer.new()
+	interact_timer.wait_time = 1
+	interact_timer.one_shot = true
+	interact_timer.autostart = true
+	add_child(interact_timer)
+	_is_interacting = true
+	interact_timer.timeout.connect(Callable(self, "interact_with_npc"))
+
 # checks input events
 func _input(event: InputEvent) -> void:
 	
@@ -60,7 +74,7 @@ func _input(event: InputEvent) -> void:
 	
 	# action - interact
 	if event.is_action_pressed("interact"):
-		interact_with_npc()
+		set_up_interact_timer()
 	
 	# action - crouch
 	if event.is_action_pressed("crouch"):
@@ -100,6 +114,7 @@ func interact_with_npc():
 		nearby_npcs = $InteractionAreaRight.get_overlapping_bodies()
 	else:
 		nearby_npcs = $InteractionAreaLeft.get_overlapping_bodies()
+	_is_interacting = false
 	for npc in nearby_npcs:
 		if npc.is_in_group("npc") and npc.is_dreaming:
 			npc.enter_dream()
