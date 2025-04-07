@@ -22,7 +22,7 @@ func create_level(current_depth, allowed_depth):
 	var weapon_scenes = [
 		preload("res://Weapons/Gun.tscn"),
 		preload("res://Weapons/AssaultRifle.tscn"),
-		preload("res://Weapons/SubmachineGun.tscn"),
+		preload("res://Weapons/Shotgun.tscn"),
 	]
 	var background_margin = 100
 
