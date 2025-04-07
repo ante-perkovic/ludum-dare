@@ -31,7 +31,6 @@ func create_level(current_depth, allowed_depth):
 	set_random_theme()
 	set_random_name_list()
 
-
 	# Draw foreground
 	for y in range(-background_margin, height + background_margin):
 		for x in range(-background_margin, width + background_margin):
@@ -50,13 +49,13 @@ func create_level(current_depth, allowed_depth):
 	# Spawn NPCS
 	if allowed_depth == -1:
 		# Spawn one level that is main_quest
-		var number_of_dreaming_npc = 10+randi_range(2,3)
-		spawn_npcs(npc_scene, floor_tiles, tileMapLayer, 1, current_depth+1, -1)
-		spawn_npcs(npc_scene, floor_tiles, tileMapLayer, number_of_dreaming_npc, current_depth+1, 2)
-	elif allowed_depth == 1 or allowed_depth == 2:
+		var number_of_dreaming_npc = 10 + randi_range(2,3)
+		spawn_npcs(npc_scene, floor_tiles, tileMapLayer, 1, true, current_depth+1, -1)
+		spawn_npcs(npc_scene, floor_tiles, tileMapLayer, number_of_dreaming_npc, true, current_depth+1, 1)
+	elif allowed_depth == 1:
 		var number_of_dreaming_npc = randi_range(2,3)
-		spawn_npcs(npc_scene, floor_tiles, tileMapLayer, number_of_dreaming_npc, current_depth+1, allowed_depth - 1)
-	spawn_npcs(npc_scene, floor_tiles, tileMapLayer, number_of_normal_npc, 0, 0)
+		spawn_npcs(npc_scene, floor_tiles, tileMapLayer, number_of_dreaming_npc, true, current_depth+1, allowed_depth - 1)
+	spawn_npcs(npc_scene, floor_tiles, tileMapLayer, number_of_normal_npc, false, 0, 0)
 
 	# Spawn enemies
 	spawn_enemies(enemy_scene, floor_tiles, tileMapLayer, player.global_position, randi() % 6 + 3, 4)
@@ -84,18 +83,15 @@ func set_random_theme() -> void:
 func get_random_floor_tile(floor_tiles: Array[Vector2i]) -> Vector2i:
 	return floor_tiles.pop_back()
 
-func spawn_npcs(npc_scene, floor_tiles, tile_map, count: int, current_depth: int, allowed_depth: int) -> void:
+func spawn_npcs(npc_scene, floor_tiles, tile_map, count: int, is_dreaming:bool, current_depth: int, allowed_depth: int) -> void:
 	for i in count:
 		if floor_tiles.is_empty(): break
 		var npc = npc_scene.instantiate()
 		npc.current_depth = current_depth
 		var npc_name = allowed_names[randi() % allowed_names.size()]
-		npc.set_npc_name(npc_name)
-		if allowed_depth == -1 or allowed_depth == 0:
-			npc.allowed_depth = allowed_depth
-		else:
-			npc.allowed_depth = randi_range(1, allowed_depth)
-		npc.is_dreaming = npc.allowed_depth != 0
+		npc.set_npc_name(npc_name)	
+		npc.allowed_depth = randi_range(0, allowed_depth)
+		npc.is_dreaming = is_dreaming
 		npc.global_position = tile_map.map_to_local(get_random_floor_tile(floor_tiles))
 		add_child(npc)
 

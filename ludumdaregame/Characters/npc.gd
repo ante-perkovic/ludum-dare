@@ -24,10 +24,10 @@ func set_npc_name(name: String) -> void:
 		# TODO: Maknuti boje kasnije vjerojatno
 		if allowed_depth == -1:
 			_name_label.modulate = Color(1, 0, 0)
-		if allowed_depth == 1:
+		if is_dreaming and allowed_depth == 0:
+			_name_label.modulate = Color(1, 1, 0.3)
+		if is_dreaming and allowed_depth == 1:
 			_name_label.modulate = Color(0.5, 1, 0.5)
-		if allowed_depth == 2:
-			_name_label.modulate = Color(0.5, 0.5, 1)
 
 func _process(_delta):
 	var velocity = (global_position - _last_position) / _delta
