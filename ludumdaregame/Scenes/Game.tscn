@@ -87,7 +87,6 @@ offset_bottom = 11.4
 texture = ExtResource("3_kldst")
 
 [node name="GameOver" type="Control" parent="GameInterfaceCanvas/MarginContainer"]
-visible = false
 z_index = 10
 layout_mode = 2
 
@@ -136,4 +135,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Max dream depth: 5"
+horizontal_alignment = 3
+
+[node name="Directions" type="Label" parent="GameInterfaceCanvas/MarginContainer/GameOver/ScoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Press q or esc to exit..."
 horizontal_alignment = 3
