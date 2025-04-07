@@ -11,6 +11,7 @@ var max_dream_depth: int = 0
 var SCORE_KILL = 20
 var SCORE_COIN = 10
 var SCORE_DREAM = 30
+var DMG_EXIT_LEVEL = 20
 
 func _ready():
 	# Start the first level
@@ -41,8 +42,8 @@ func enter_level(level_name, npc):
 			new_level.create_level(1, -1)
 	else:
 		new_level = level_map[level_name]
-		# TODO: Resetirati level nekako, da ima iste postavke ko na pocetku,
-		# Ili ga resetati samo tako da se reseta playera na pocetak, mozda tako bolje
+		new_level.find_child("Player").health = 100
+		# TODO manje bitno: Mozda teleportirati igraca
 	current_level = level_name
 	if previous_level:
 		change_level(previous_level, current_level)
@@ -56,6 +57,7 @@ func return_to_previous_level():
 		var previous_level = level_stack.pop_back()
 		change_level(current_level, previous_level)
 		current_level = previous_level
+		level_map[current_level].find_child("Player").take_damage(DMG_EXIT_LEVEL)
 
 func game_over():
 	var game_over_layer: Control = $GameInterfaceCanvas/MarginContainer/GameOver

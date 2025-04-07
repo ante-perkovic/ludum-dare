@@ -147,14 +147,13 @@ func interact_with_npc():
 
 func take_damage(amount: int):
 	health -= amount
-	if health <= 0.1:
+	if health <= 0:
 		die()
 
 func die():
 	var game = find_parent("Game")
-	game.return_to_previous_level()
 	if len(game.level_stack):
-		queue_free()
+		game.return_to_previous_level()
 	else:
 		game.game_over()
 

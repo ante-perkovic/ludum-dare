@@ -34,7 +34,7 @@ func create_level(current_depth, allowed_depth):
 	var COIN_FREQUENCY = 10 # smaller == more rare
 
 	var number_of_enemies = current_depth + randi_range(3, 10)
-	var number_of_normal_npc = 0
+	var number_of_normal_npc = randi_range(5, 10)
 
 	theme_id = randi() % theme_list.size()
 	set_random_name_list()
@@ -64,7 +64,7 @@ func create_level(current_depth, allowed_depth):
 	# Spawn NPCS
 	if allowed_depth == -1:
 		# Spawn one level that is main_quest
-		var number_of_dreaming_npc = 10 + randi_range(2,3)
+		var number_of_dreaming_npc = randi_range(2,3)
 		spawn_npcs(npc_scene, floor_tiles, backgroundLayer, 1, true, current_depth+1, -1)
 		spawn_npcs(npc_scene, floor_tiles, backgroundLayer, number_of_dreaming_npc, true, current_depth+1, 1)
 	elif allowed_depth == 1:
