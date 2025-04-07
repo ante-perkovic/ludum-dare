@@ -41,19 +41,21 @@ func _process(_delta):
 			_animated_sprite.play("default")
 	_last_position = global_position
 	
-	var player = get_tree().get_nodes_in_group("player")[0]
-	var npcs = player.get_overlapping_npcs()
-	var label = get_node("Label")
-	var is_overlapping = false
-	for i in npcs:
-		if i == self:
-			is_overlapping = true
-			break
-	if is_overlapping:
-		label.text = "E"
-		label.show()
-	else:
-		label.hide()
+	var players = get_tree().get_nodes_in_group("player")
+	if len(players) > 0:
+		var player = players[0]
+		var npcs = player.get_overlapping_npcs()
+		var label = get_node("Label")
+		var is_overlapping = false
+		for i in npcs:
+			if i == self:
+				is_overlapping = true
+				break
+		if is_overlapping:
+			label.text = "E"
+			label.show()
+		else:
+			label.hide()
 
 func _body_entered(body: Node2D)->void:
 	print(body)
