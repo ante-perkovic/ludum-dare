@@ -3,6 +3,8 @@ extends Node2D
 @export var damage: int = 10
 @export var rate_of_fire: int = 1
 @export var spread_angle_degrees: float = 20.0
+@export var weapon_name: String = 'gun'
+
 var can_fire: bool = true
 var shoot_timer: Timer = null
 
@@ -30,3 +32,6 @@ func fire() -> bool:
 
 func reload():
 	can_fire = true
+
+func instantiate_weapon():
+	return preload("res://Weapons/Gun.tscn").instantiate()

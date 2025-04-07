@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 enemy="for enemies"
 npc=""
 player=""
+weapon=""
 
 [input]
 

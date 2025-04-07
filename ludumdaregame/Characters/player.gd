@@ -1,7 +1,7 @@
 extends CharacterBody2D
 @export var player_move_speed: float = 150
 @export var projectile_scene: PackedScene = preload("res://Characters/projectile.tscn")
-@export var weapon = preload("res://Weapons/Gun.tscn").instantiate()
+@export var weapon = null #
 var health: int = 100
 var coins: int = 0
 
@@ -41,6 +41,9 @@ func _process(_delta):
 
 func _ready():
 	_last_position = global_position
+	
+	# give player a GUN
+	weapon = preload("res://Weapons/Gun.tscn").instantiate()
 
 func _physics_process(_delta):
 	#Get input direction
@@ -140,3 +143,7 @@ func update_health_bar():
 
 func add_coin():
 	coins += 1
+
+func _on_weapon_pickup_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("weapon"):
+		weapon = body.instantiate_weapon()

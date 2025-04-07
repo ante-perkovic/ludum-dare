@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cn2yww38pccv6"]
+[gd_scene load_steps=21 format=3 uid="uid://cn2yww38pccv6"]
 
 [ext_resource type="Script" uid="uid://cy2fyjv64so4l" path="res://Characters/player.gd" id="1_eovys"]
 [ext_resource type="Texture2D" uid="uid://b37yj21a2i5ax" path="res://Assets/characters.png" id="2_eovys"]
@@ -121,6 +121,9 @@ radius = 7.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_eovys"]
 radius = 15.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_65n15"]
+radius = 19.0
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 3
 collision_mask = 3
@@ -157,3 +160,11 @@ value = 100.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
+
+[node name="WeaponPickupArea" type="Area2D" parent="." groups=["weapon"]]
+
+[node name="WeaponCollision" type="CollisionShape2D" parent="WeaponPickupArea"]
+shape = SubResource("CircleShape2D_65n15")
+
+[connection signal="body_entered" from="WeaponPickupArea" to="." method="_on_weapon_pickup_area_body_entered"]
+[connection signal="tree_entered" from="WeaponPickupArea" to="." method="_on_weapon_pickup_area_tree_entered"]
