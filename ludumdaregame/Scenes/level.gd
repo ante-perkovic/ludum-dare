@@ -6,7 +6,7 @@ var utils = preload("res://scripts/generate_utils.gd")
 var allowed_names = null
 var level_theme = null
 
-func create_level(current_depth=0, allowed_depth=-1):
+func create_level(current_depth, allowed_depth):
 	# Current depth will determine how hard is the level, allowed depth is used
 	# for side quest NPC, use -1 if the main level
 	var level_generator = get_node("LevelGenerator")

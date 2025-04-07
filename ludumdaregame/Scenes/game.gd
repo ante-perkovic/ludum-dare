@@ -25,7 +25,10 @@ func enter_level(level_name, npc):
 	if level_name not in level_map:
 		new_level = LevelScene.instantiate()
 		level_map[level_name] = new_level
-		new_level.create_level()
+		if npc:
+			new_level.create_level(npc.current_depth, npc.allowed_depth)
+		else:
+			new_level.create_level(1, -1)
 	else:
 		new_level = level_map[level_name]
 		# TODO: Resetirati level nekako, da ima iste postavke ko na pocetku,
