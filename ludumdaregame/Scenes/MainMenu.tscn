@@ -1,0 +1,90 @@
+[gd_scene load_steps=5 format=3 uid="uid://cvwntj64ejj5k"]
+
+[ext_resource type="Theme" uid="uid://r0lpruf6fm8g" path="res://Scenes/main_menu_theme.tres" id="1_853f1"]
+[ext_resource type="Script" uid="uid://du4j4rtlespxd" path="res://Scenes/main_menu.gd" id="2_8saeu"]
+[ext_resource type="Texture2D" uid="uid://cuw6pas07bm1j" path="res://Assets/UI/main_menu_background.png" id="3_8saeu"]
+[ext_resource type="Texture2D" uid="uid://bdj72nvqhpmbo" path="res://Assets/UI/main_menu_title.png" id="4_ghw46"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_853f1")
+script = ExtResource("2_8saeu")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0666667, 0.0588235, 0.109804, 1)
+
+[node name="BackgroundImage" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_8saeu")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleImage" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_ghw46")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = 44.0
+offset_right = 40.0
+offset_bottom = 142.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "PLAY"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "QUIT"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -225.0
+offset_top = -115.0
+offset_right = -16.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("1_853f1")
+theme_override_font_sizes/font_size = 40
+text = "Created for
+Ludum dare 57"
+
+[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
