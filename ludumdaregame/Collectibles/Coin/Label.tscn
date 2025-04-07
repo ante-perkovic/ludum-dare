@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dig37ujwja70g"]
+
+[ext_resource type="Script" uid="uid://percchd8qwm6" path="res://Collectibles/Coin/label.gd" id="1_adxg1"]
+
+[node name="Label" type="Node2D"]
+
+[node name="Text" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "+1"
+script = ExtResource("1_adxg1")
