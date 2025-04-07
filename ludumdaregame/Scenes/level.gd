@@ -40,7 +40,7 @@ func create_level():
 
 	spawn_enemies(enemy_scene, floor_tiles, tileMapLayer, player.global_position, randi() % 6 + 3, 4)
 	
-	spawn_coints(coin_scene, floor_tiles, tileMapLayer, 10)
+	spawn_coins(coin_scene, floor_tiles, tileMapLayer, 10)
 
 func get_random_floor_tile(floor_tiles: Array[Vector2i]) -> Vector2i:
 	return floor_tiles.pop_back()
@@ -68,7 +68,7 @@ func spawn_enemies(enemy_scene, floor_tiles, tile_map, player_pos: Vector2, coun
 		enemy.global_position = tile_map.map_to_local(pos)
 		add_child(enemy)
 
-func spawn_coints(coin_scene, floor_tiles, tile_map, count):
+func spawn_coins(coin_scene, floor_tiles, tile_map, count):
 	for i in count:
 		if floor_tiles.is_empty():
 			break
