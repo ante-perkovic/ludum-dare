@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://ch3d2bblffjwm"]
+
+[node name="Beacon" type="Node2D"]

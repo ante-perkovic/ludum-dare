@@ -7,6 +7,12 @@ const utils = preload("./generate_utils.gd")
 static func get_random_texture(options: Array) -> Vector2i:
 	return options[randi() % options.size()]
 
+static func get_random_decoration_inside():
+	return get_random_texture([Vector2i(2, 6), Vector2i(3, 6), Vector2i(4, 6), Vector2i(5, 6)])
+
+static func get_random_decoration_outside():
+	return get_random_texture([Vector2i(0, 6), Vector2i(1, 6)])
+
 static func get_tile_texture_coords(tiles: Array, x: int, y: int) -> Vector2i:
 	var current := utils.get_tile_type(tiles, x, y)
 	var left := utils.get_tile_type(tiles, x - 1, y)
@@ -19,7 +25,11 @@ static func get_tile_texture_coords(tiles: Array, x: int, y: int) -> Vector2i:
 	var bottom_right := utils.get_tile_type(tiles, x + 1, y + 1)
 
 	if current == utils.TileType.FLOOR:
-		if left == utils.TileType.WALL:
+		if left == utils.TileType.WALL and right == utils.TileType.WALL:
+			return Vector2i(2, 5)  # FloorLeftRight
+		elif top == utils.TileType.WALL and bottom == utils.TileType.WALL:
+			return Vector2i(3, 5)  # FLoorTopBottom
+		elif left == utils.TileType.WALL:
 			if top == utils.TileType.WALL:
 				return Vector2i(1, 1)  # FloorTopLeft
 			elif bottom == utils.TileType.WALL:
@@ -45,7 +55,7 @@ static func get_tile_texture_coords(tiles: Array, x: int, y: int) -> Vector2i:
 		var wall_right = get_random_texture([Vector2i(5, 0), Vector2i(5, 1), Vector2i(5, 2)])  # WallRight
 		var wall_bottom = get_random_texture([Vector2i(1, 4), Vector2i(2, 4), Vector2i(3, 4)])  # WallBottom
 		var wall_top = get_random_texture([Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)])  # WallTop
-		var wall_top_right = Vector2i(3, 5)  # WallTopRight
+		var wall_top_right = Vector2i(1, 5)  # WallTopRight
 		var wall_top_left = Vector2i(0, 5)  # WallTopLeft
 		var wall_bottom_right = Vector2i(5,4)  # WallBottomRight
 		var wall_bottom_left = Vector2i(0,4)  # WallBottomLeft
@@ -108,4 +118,4 @@ static func get_tile_texture_coords(tiles: Array, x: int, y: int) -> Vector2i:
 				return wall_top_left
 			else:
 				return wall_left_right
-	return get_random_texture([Vector2i(8, 7)])
+	return get_random_texture([Vector2i(8, 0)])
