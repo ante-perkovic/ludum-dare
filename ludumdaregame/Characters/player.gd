@@ -46,6 +46,10 @@ func _ready():
 	
 	# give player a GUN
 	weapon = preload("res://Weapons/Gun.tscn").instantiate()
+	
+	add_child(weapon)
+	
+	weapon.hide()
 
 func _physics_process(_delta):
 	#Get input direction
@@ -164,4 +168,5 @@ func add_health():
 
 func _on_weapon_pickup_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("weapon"):
+		push_error("fire must be implemented!")
 		weapon = body.instantiate_weapon()

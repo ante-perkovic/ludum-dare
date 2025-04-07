@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 
 func fire() -> bool:
 	if can_fire == true:
-		# can_fire = false
+		can_fire = false
 		
 		var shoot_timer = Timer.new()
 		shoot_timer.wait_time = 1 / rate_of_fire
