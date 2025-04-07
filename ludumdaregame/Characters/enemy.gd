@@ -44,6 +44,7 @@ func _ready():
 	behavior_timer.start()
 	
 	set_up_shooting_timer()
+	update_health_bar()
 
 func _physics_process(_delta):
 	if player:
@@ -134,4 +135,4 @@ func shoot_projectile():
 
 func update_health_bar():
 	var healthbar = get_node("HealthBar")
-	healthbar.value = health
+	healthbar.text  = str(health)

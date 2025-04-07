@@ -149,15 +149,6 @@ shape = SubResource("CircleShape2D_eovys")
 position = Vector2(16, 2)
 shape = SubResource("CircleShape2D_eovys")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="HealthBar" type="ProgressBar" parent="CanvasLayer"]
-offset_left = 5.0
-offset_top = 11.0
-offset_right = 317.0
-offset_bottom = 38.0
-value = 100.0
-
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 

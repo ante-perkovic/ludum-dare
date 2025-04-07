@@ -147,16 +147,11 @@ func take_damage(amount: int):
 	health -= amount
 	if health <= 0:
 		die()
-	update_health_bar()
 
 func die():
 	var game_node = find_parent("Game")
 	game_node.return_to_previous_level()
 	queue_free()
-
-func update_health_bar():
-	var healthbar = get_node("CanvasLayer/HealthBar")
-	healthbar.value = health
 
 func add_coin():
 	coins += 1
@@ -164,7 +159,6 @@ func add_coin():
 
 func add_health():
 	health += 1
-	update_health_bar()
 
 func _on_weapon_pickup_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("weapon"):

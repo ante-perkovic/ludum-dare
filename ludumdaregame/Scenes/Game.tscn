@@ -1,6 +1,87 @@
-[gd_scene load_steps=2 format=3 uid="uid://cmkgwb33fuov"]
+[gd_scene load_steps=8 format=3 uid="uid://cmkgwb33fuov"]
 
 [ext_resource type="Script" uid="uid://tq0kvxcrs8uo" path="res://Scenes/game.gd" id="1_j5yw3"]
+[ext_resource type="Script" uid="uid://bl2htilkflcvq" path="res://Scenes/game_interface.gd" id="2_j5yw3"]
+[ext_resource type="Theme" uid="uid://5wufh32v4p0p" path="res://Scenes/game_theme.tres" id="2_kldst"]
+[ext_resource type="Texture2D" uid="uid://cm0dy0srt5sm0" path="res://Assets/UI/heart.png" id="3_kldst"]
+[ext_resource type="Texture2D" uid="uid://b6stlgdqhloka" path="res://Assets/UI/ProgressBar/under.png" id="4_7lihs"]
+[ext_resource type="Texture2D" uid="uid://2hvvmb5twyv4" path="res://Assets/UI/ProgressBar/over.png" id="5_fgofq"]
+[ext_resource type="Texture2D" uid="uid://chdlyykf8ygvh" path="res://Assets/UI/ProgressBar/progress.png" id="6_2irst"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_j5yw3")
+
+[node name="GameInterfaceCanvas" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="GameInterfaceCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+
+[node name="GameInterface" type="Control" parent="GameInterfaceCanvas/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("2_kldst")
+script = ExtResource("2_j5yw3")
+
+[node name="TopRightBox" type="VBoxContainer" parent="GameInterfaceCanvas/MarginContainer/GameInterface"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 142.0
+grow_horizontal = 0
+
+[node name="DreamDepthLabel" type="Label" parent="GameInterfaceCanvas/MarginContainer/GameInterface/TopRightBox"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Dream depth: 5"
+
+[node name="ScoreLabel" type="Label" parent="GameInterfaceCanvas/MarginContainer/GameInterface/TopRightBox"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Score: 1200"
+
+[node name="LevelLabel" type="Label" parent="GameInterfaceCanvas/MarginContainer/GameInterface"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -108.0
+offset_right = 108.0
+offset_bottom = 33.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Dreaming in:
+John"
+horizontal_alignment = 1
+
+[node name="HealthBar" type="TextureProgressBar" parent="GameInterfaceCanvas/MarginContainer/GameInterface"]
+custom_minimum_size = Vector2(3, 0)
+layout_mode = 0
+offset_left = 28.0
+offset_top = 15.0
+offset_right = 73.0
+offset_bottom = 24.0
+scale = Vector2(4, 4)
+nine_patch_stretch = true
+texture_under = ExtResource("4_7lihs")
+texture_over = ExtResource("5_fgofq")
+texture_progress = ExtResource("6_2irst")
+
+[node name="TextureRect" type="TextureRect" parent="GameInterfaceCanvas/MarginContainer/GameInterface/HealthBar"]
+layout_mode = 0
+offset_left = -5.2
+offset_top = -1.6
+offset_right = 7.8
+offset_bottom = 11.4
+texture = ExtResource("3_kldst")
