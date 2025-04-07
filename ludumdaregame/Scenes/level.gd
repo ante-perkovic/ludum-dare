@@ -18,6 +18,7 @@ func create_level(current_depth, allowed_depth):
 	var npc_scene = preload("res://Characters/npc.tscn")
 	var enemy_scene = preload("res://Characters/enemy.tscn")
 	var coin_scene = preload("res://Collectibles/Coin/coin.tscn")
+	var heart_scene = preload("res://Collectibles/Heart/Heart.tscn")
 	var weapon_scenes = [
 		preload("res://Weapons/Gun.tscn"),
 		preload("res://Weapons/AssaultRifle.tscn"),
@@ -80,6 +81,9 @@ func create_level(current_depth, allowed_depth):
 	
 	# Spawn coins
 	spawn_coins(coin_scene, floor_tiles, backgroundLayer, player.global_position, 20, 3)
+	
+	# spawn hears
+	spawn_hearts(heart_scene, floor_tiles, backgroundLayer, player.global_position, 4, 3)
 
 func set_random_name_list() -> void:
 	var name_lists = [
@@ -155,3 +159,18 @@ func spawn_weapons(weapon_scene, floor_tiles, tile_map, player_pos, count, min_d
 				break
 		weapon.global_position = tile_map.map_to_local(pos)
 		add_child(weapon)
+
+func spawn_hearts(heart_scene, floor_tiles, tile_map, player_pos, count, min_distance):
+	for i in count:
+		if floor_tiles.is_empty(): break
+		var health = heart_scene.instantiate()
+		var pos: Vector2i
+
+		while true:
+			if floor_tiles.is_empty(): break
+			pos = get_random_floor_tile(floor_tiles)
+			var dist = player_pos.distance_to(tile_map.map_to_local(pos)) / tile_map.tile_set.tile_size.x
+			if dist > min_distance:
+				break
+		health.global_position = tile_map.map_to_local(pos)
+		add_child(health)

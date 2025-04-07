@@ -1,11 +1,12 @@
 extends Node2D
 
-var FloatingTextScene = preload("res://Collectibles/Coin/Label.tscn")  # Adjust the path as needed
+var FloatingTextScene = preload("res://Collectibles/Heart/HeartLabel.tscn")
+
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		print("a")
-		body.add_coin()
+		body.add_health()
 		# Instance the floating text and set its position
 		var floatingText = FloatingTextScene.instantiate()
 		# Position it where the coin was, or adjust if needed for your UI
