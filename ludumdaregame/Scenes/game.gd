@@ -5,6 +5,7 @@ var level_map: Dictionary[int, Node] = {} # Remembers all levels by names (names
 var npc_map: Dictionary[int, Node] = {}
 var current_level: int = 0
 var LevelScene = preload("Level.tscn")
+var score: int = 0
 
 func _ready():
 	# Start the first level
