@@ -134,3 +134,6 @@ func die():
 func update_health_bar():
 	var healthbar = get_node("CanvasLayer/HealthBar")
 	healthbar.value = health
+
+func add_coin():
+	print("coin added")
