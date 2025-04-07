@@ -1,0 +1,28 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://r0lpruf6fm8g"]
+
+[ext_resource type="FontFile" uid="uid://uhvjib4bux5c" path="res://Assets/Fonts/Pixel Game.otf" id="1_ka8pp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0j1bk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7d6c8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w2edh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j1qep"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2k5kv"]
+
+[resource]
+default_font = ExtResource("1_ka8pp")
+Button/colors/font_color = Color(0.847059, 0.752941, 0.768627, 1)
+Button/colors/font_focus_color = Color(0.83, 0.7387, 0.753917, 1)
+Button/colors/font_hover_color = Color(0.85, 0.8075, 0.814583, 1)
+Button/colors/font_hover_pressed_color = Color(0.7, 0.623, 0.635833, 1)
+Button/colors/font_pressed_color = Color(0.7, 0.623, 0.635833, 1)
+Button/font_sizes/font_size = 75
+Button/styles/disabled = SubResource("StyleBoxEmpty_0j1bk")
+Button/styles/focus = SubResource("StyleBoxEmpty_7d6c8")
+Button/styles/hover = SubResource("StyleBoxEmpty_w2edh")
+Button/styles/normal = SubResource("StyleBoxEmpty_j1qep")
+Button/styles/pressed = SubResource("StyleBoxEmpty_2k5kv")
+Label/colors/font_color = Color(0.85, 0.7565, 0.772083, 1)
