@@ -45,6 +45,7 @@ func _process(_delta):
 	var players = get_tree().get_nodes_in_group("player")
 	if len(players) > 0:
 		var player = players[0]
+		return
 		var npcs = player.get_overlapping_npcs()
 		var is_overlapping = false
 		for i in npcs:

@@ -1,12 +1,10 @@
 extends CharacterBody2D
+@export var player_move_speed: float = 150
 @export var projectile_scene: PackedScene = preload("res://Characters/projectile.tscn")
 @export var weapon = preload("res://Weapons/Gun.tscn").instantiate()
-
-
 var health: int = 100
 var coins: int = 0
 
-@export var player_move_speed: float = 150
 var PLAYER_MOVE_SPEED_CROUCH = 50
 var PLAYER_MOVE_SPEED_DEFAULT = 150
 var PLAYER_MOVE_SPEED_SPRINT = 225
@@ -43,9 +41,6 @@ func _process(_delta):
 
 func _ready():
 	_last_position = global_position
-	
-	# give player a GUN
-	weapon = preload("res://Weapons/Gun.tscn").instantiate()
 
 func _physics_process(_delta):
 	#Get input direction
@@ -59,14 +54,8 @@ func _physics_process(_delta):
 	#Update velocity
 	velocity = input_direction * player_move_speed
 	
-	if abs(velocity.x) > 0 and abs(velocity.y) > 0:
-		velocity.x = velocity.x * sqrt(2)/2
-		velocity.y = velocity.y * sqrt(2)/2
-	
 	#Move and Slide function uses velocity or character body to move the character on map
-	if !_is_interacting:
-		move_and_slide()
-	
+	move_and_slide()
 
 func set_up_interact_timer():
 	var interact_timer = Timer.new()
@@ -80,7 +69,7 @@ func set_up_interact_timer():
 # checks input events
 func _input(event: InputEvent) -> void:
 	
-	# action - shoots
+	# action - shoot
 	if event.is_action_pressed("shoot"):
 		shoot_projectile()
 	
@@ -122,17 +111,12 @@ func shoot_projectile():
 	get_parent().add_child(projectile)
 
 # checks if there are NPCs nearby and enters their dream
-func get_overlapping_npcs():
+func interact_with_npc():
 	var nearby_npcs
 	if _animated_sprite.flip_h:
 		nearby_npcs = $InteractionAreaRight.get_overlapping_bodies()
 	else:
 		nearby_npcs = $InteractionAreaLeft.get_overlapping_bodies()
-	return nearby_npcs
-	
-
-func interact_with_npc():
-	var nearby_npcs = get_overlapping_npcs()
 	_is_interacting = false
 	for npc in nearby_npcs:
 		if npc.is_in_group("npc") and npc.is_dreaming:
@@ -156,7 +140,3 @@ func update_health_bar():
 
 func add_coin():
 	coins += 1
-
-func _on_weapon_pickup_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("weapon"):
-		weapon = body.instantiate_weapon()
