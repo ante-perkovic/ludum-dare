@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bm0vfbpsk8sa6"]
 
 [ext_resource type="Script" uid="uid://cmlflqb05i7jj" path="res://Collectibles/Coin/coin.gd" id="1_ju2rj"]
-[ext_resource type="Texture2D" uid="uid://cxo4hvf6kgm4u" path="res://Assets/tileset.png" id="2_ju2rj"]
+[ext_resource type="Texture2D" uid="uid://cxo4hvf6kgm4u" path="res://Assets/Tilesets/dungeon_tileset.png" id="2_ju2rj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c34ob"]
 
