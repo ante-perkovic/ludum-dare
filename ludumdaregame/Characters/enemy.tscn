@@ -87,10 +87,11 @@ sprite_frames = SubResource("SpriteFrames_kptum")
 centered = false
 
 [node name="HealthBar" type="ProgressBar" parent="."]
-offset_left = -33.0
-offset_top = 19.0
-offset_right = 37.0
-offset_bottom = 46.0
+offset_left = -7.0
+offset_top = -22.0
+offset_right = 10.0
+offset_bottom = 5.0
+scale = Vector2(0.919763, 0.227932)
 value = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemy"]]
