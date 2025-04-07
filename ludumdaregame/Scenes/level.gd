@@ -9,6 +9,7 @@ func create_level():
 	var tileMapLayer: TileMapLayer = get_node("TileMapLayer")
 	var npc_scene = preload("res://Characters/npc.tscn")
 	var enemy_scene = preload("res://Characters/enemy.tscn")
+	var coin_scene = preload("res://Collectibles/Coin/coin.tscn")
 	var background_margin = 100
 
 	var floor_tiles: Array[Vector2i] = []
@@ -16,6 +17,8 @@ func create_level():
 
 	var width = len(level_tiles[0])
 	var height = len(level_tiles)
+	
+	var COIN_FREQUENCY = 10 # smaller == more rare
 
 	# Draw foreground
 	for y in range(-background_margin, height + background_margin):
@@ -36,7 +39,8 @@ func create_level():
 	spawn_npcs(npc_scene, floor_tiles, tileMapLayer, false, 0) # randi() % 4 + 1 if you want awake ones
 
 	spawn_enemies(enemy_scene, floor_tiles, tileMapLayer, player.global_position, randi() % 6 + 3, 4)
-
+	
+	spawn_coints(coin_scene, floor_tiles, tileMapLayer, 10)
 
 func get_random_floor_tile(floor_tiles: Array[Vector2i]) -> Vector2i:
 	return floor_tiles.pop_back()
@@ -63,3 +67,19 @@ func spawn_enemies(enemy_scene, floor_tiles, tile_map, player_pos: Vector2, coun
 				break
 		enemy.global_position = tile_map.map_to_local(pos)
 		add_child(enemy)
+
+func spawn_coints(coin_scene, floor_tiles, tile_map, count):
+	for i in count:
+		if floor_tiles.is_empty():
+			break
+		var coin = coin_scene.instantiate()
+		var pos: Vector2i
+		
+		while true:
+			# TODO: validate
+			if floor_tiles.is_empty(): 
+				break
+			pos = get_random_floor_tile(floor_tiles)
+
+		coin.global_position = tile_map.map_to_local(pos)
+		add_child(coin)
