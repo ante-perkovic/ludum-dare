@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://crv52otjvhjtb"]
+[gd_scene load_steps=14 format=3 uid="uid://crv52otjvhjtb"]
 
 [ext_resource type="Script" uid="uid://esujh4ng0sxw" path="res://Characters/enemy.gd" id="1_rtu5t"]
+[ext_resource type="FontFile" uid="uid://bybbrkbohplev" path="res://Assets/Fonts/ByteBounce.ttf" id="2_rtu5t"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_04wy3"]
 load_path = "res://.godot/imported/characters.png-b3722e77d80a2c5d1718add7ba80e281.ctex"
@@ -95,5 +96,6 @@ offset_left = -9.0
 offset_top = -23.0
 offset_right = 31.0
 scale = Vector2(0.489904, 0.303226)
+theme_override_fonts/font = ExtResource("2_rtu5t")
 horizontal_alignment = 1
 vertical_alignment = 1

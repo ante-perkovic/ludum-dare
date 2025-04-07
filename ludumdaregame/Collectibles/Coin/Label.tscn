@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dig37ujwja70g"]
+[gd_scene load_steps=3 format=3 uid="uid://dig37ujwja70g"]
 
 [ext_resource type="Script" uid="uid://percchd8qwm6" path="res://Collectibles/Coin/label.gd" id="1_adxg1"]
+[ext_resource type="FontFile" uid="uid://bybbrkbohplev" path="res://Assets/Fonts/ByteBounce.ttf" id="1_gelp7"]
 
 [node name="Label" type="Node2D"]
 
@@ -9,5 +10,8 @@ offset_left = -9.0
 offset_top = -12.0
 offset_right = 10.0
 offset_bottom = 11.0
+theme_override_fonts/font = ExtResource("1_gelp7")
 text = "+1"
+horizontal_alignment = 1
+vertical_alignment = 1
 script = ExtResource("1_adxg1")
