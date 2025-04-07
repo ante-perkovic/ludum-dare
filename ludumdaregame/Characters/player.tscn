@@ -79,11 +79,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5mj4t"]
-size = Vector2(12.5, 26)
+[sub_resource type="CircleShape2D" id="CircleShape2D_vb825"]
+radius = 7.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eovys"]
-radius = 58.0
+radius = 15.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_eovys")
@@ -93,13 +93,19 @@ sprite_frames = SubResource("SpriteFrames_642pg")
 animation = &"running"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
-position = Vector2(0, -2)
-shape = SubResource("RectangleShape2D_5mj4t")
+position = Vector2(2, 9)
+shape = SubResource("CircleShape2D_vb825")
 
-[node name="InteractionArea" type="Area2D" parent="."]
-visible = false
+[node name="InteractionAreaLeft" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+[node name="CollisionShapeLeft2D" type="CollisionShape2D" parent="InteractionAreaLeft"]
+position = Vector2(-14, 2)
+shape = SubResource("CircleShape2D_eovys")
+
+[node name="InteractionAreaRight" type="Area2D" parent="."]
+
+[node name="CollisionShapeRight2D" type="CollisionShape2D" parent="InteractionAreaRight"]
+position = Vector2(16, 2)
 shape = SubResource("CircleShape2D_eovys")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

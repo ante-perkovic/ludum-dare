@@ -95,7 +95,11 @@ func shoot_projectile():
 
 # checks if there are NPCs nearby and enters their dream
 func interact_with_npc():
-	var nearby_npcs = $InteractionArea.get_overlapping_bodies()
+	var nearby_npcs
+	if _animated_sprite.flip_h:
+		nearby_npcs = $InteractionAreaRight.get_overlapping_bodies()
+	else:
+		nearby_npcs = $InteractionAreaLeft.get_overlapping_bodies()
 	for npc in nearby_npcs:
 		if npc.is_in_group("npc") and npc.is_dreaming:
 			npc.enter_dream()
