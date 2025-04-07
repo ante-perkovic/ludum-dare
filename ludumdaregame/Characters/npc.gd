@@ -40,6 +40,23 @@ func _process(_delta):
 		if _animated_sprite.animation != "default":
 			_animated_sprite.play("default")
 	_last_position = global_position
+	
+	var player = get_tree().get_nodes_in_group("player")[0]
+	var npcs = player.get_overlapping_npcs()
+	var label = get_node("Label")
+	var is_overlapping = false
+	for i in npcs:
+		if i == self:
+			is_overlapping = true
+			break
+	if is_overlapping:
+		label.text = "E"
+		label.show()
+	else:
+		label.hide()
+
+func _body_entered(body: Node2D)->void:
+	print(body)
 
 func _ready():
 	_last_position = global_position
@@ -57,8 +74,10 @@ func _ready():
 	is_moving = randi() % 2 == 0
 	if is_moving:
 		_change_direction()
-
+	
+	#print(player.get_overlapping_npcs())
 	behavior_timer.start()
+	
 
 func _physics_process(_delta):
 	if is_moving:

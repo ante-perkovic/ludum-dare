@@ -1,10 +1,12 @@
 extends CharacterBody2D
-@export var player_move_speed: float = 150
 @export var projectile_scene: PackedScene = preload("res://Characters/projectile.tscn")
-@export var weapon = null #
+@export var weapon = preload("res://Weapons/Gun.tscn").instantiate()
+
+
 var health: int = 100
 var coins: int = 0
 
+@export var player_move_speed: float = 150
 var PLAYER_MOVE_SPEED_CROUCH = 50
 var PLAYER_MOVE_SPEED_DEFAULT = 150
 var PLAYER_MOVE_SPEED_SPRINT = 225
@@ -57,8 +59,14 @@ func _physics_process(_delta):
 	#Update velocity
 	velocity = input_direction * player_move_speed
 	
+	if abs(velocity.x) > 0 and abs(velocity.y) > 0:
+		velocity.x = velocity.x * sqrt(2)/2
+		velocity.y = velocity.y * sqrt(2)/2
+	
 	#Move and Slide function uses velocity or character body to move the character on map
-	move_and_slide()
+	if !_is_interacting:
+		move_and_slide()
+	
 
 func set_up_interact_timer():
 	var interact_timer = Timer.new()
@@ -72,7 +80,7 @@ func set_up_interact_timer():
 # checks input events
 func _input(event: InputEvent) -> void:
 	
-	# action - shoot
+	# action - shoots
 	if event.is_action_pressed("shoot"):
 		shoot_projectile()
 	
@@ -114,12 +122,17 @@ func shoot_projectile():
 	get_parent().add_child(projectile)
 
 # checks if there are NPCs nearby and enters their dream
-func interact_with_npc():
+func get_overlapping_npcs():
 	var nearby_npcs
 	if _animated_sprite.flip_h:
 		nearby_npcs = $InteractionAreaRight.get_overlapping_bodies()
 	else:
 		nearby_npcs = $InteractionAreaLeft.get_overlapping_bodies()
+	return nearby_npcs
+	
+
+func interact_with_npc():
+	var nearby_npcs = get_overlapping_npcs()
 	_is_interacting = false
 	for npc in nearby_npcs:
 		if npc.is_in_group("npc") and npc.is_dreaming:
