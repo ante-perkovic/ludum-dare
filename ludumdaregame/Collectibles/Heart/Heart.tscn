@@ -22,9 +22,11 @@ animations = [{
 radius = 7.0
 
 [node name="Heart" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_eax7h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_drfu6")
 
 [node name="Area2D" type="Area2D" parent="."]

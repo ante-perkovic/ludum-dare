@@ -21,6 +21,7 @@ animations = [{
 }]
 
 [node name="Coin" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_ju2rj")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -31,6 +32,7 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_c34ob")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_3qbvb")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

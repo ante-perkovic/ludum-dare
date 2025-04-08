@@ -3,8 +3,6 @@ extends Node2D
 var tile_selector = preload("res://scripts/tile_texture_selector.gd")
 var utils = preload("res://scripts/generate_utils.gd")
 
-var theme_list = [ "forest", "inferno", "disco"]
-
 var allowed_names = null
 var theme_id = null
 var current_depth = null
@@ -36,17 +34,33 @@ func create_level(_current_depth, _allowed_depth):
 
 	var width = len(level_tiles[0])
 	var height = len(level_tiles)
-	
-	var COIN_FREQUENCY = 10 # smaller == more rare
 
 	var number_of_enemies = current_depth + randi_range(3, 10)
 	var number_of_normal_npc = randi_range(5, 10)
+	var number_of_beacons
+	if current_depth <= 1:
+		number_of_beacons = 0
+	else:
+		number_of_beacons = randi_range(1,3)
+	var number_of_hearts = randi_range(2,6)
+	var number_of_coins = current_depth + randi_range(5,20)
 
-	theme_id = randi() % theme_list.size()
+	var rand_x = randf()
+	if rand_x < 0.2 and current_depth > 1:
+		number_of_enemies = randi_range(0,2)
+		number_of_normal_npc = randi_range(10, 20)
+		number_of_coins = current_depth*2 + randi_range(10, 30)
+		theme_id = "disco"
+	else:
+		theme_id = "forest"
 	set_random_name_list()
 
 	# Draw foreground
-	var tile_set_id = 0
+	var tile_set_id
+	if theme_id == "forest":
+		tile_set_id = 0
+	else:
+		tile_set_id = 1
 	for y in range(-background_margin, height + background_margin):
 		for x in range(-background_margin, width + background_margin):
 			var coords = Vector2i(x, y)
@@ -79,20 +93,12 @@ func create_level(_current_depth, _allowed_depth):
 	spawn_npcs(npc_scene, floor_tiles, backgroundLayer, number_of_normal_npc, false, 0, 0)
 
 	# Spawn enemies
-	spawn_objects(enemy_scene, floor_tiles, backgroundLayer, player.global_position, randi() % 6 + 3, 4)
+	spawn_objects(enemy_scene, floor_tiles, backgroundLayer, player.global_position, number_of_enemies, 4)
 	
 	# Spawn weapons
 	# spawn_weapons(weapon_scenes.pick_random(), floor_tiles, backgroundLayer, player.global_position, 2, 4)
 	
 	# Spawn coins
-	
-	var number_of_beacons
-	if current_depth <= 1:
-		number_of_beacons = 0
-	else:
-		number_of_beacons = randi_range(1,3)
-	var number_of_hearts = randi_range(2,6)
-	var number_of_coins = current_depth + randi_range(5,20)
 	
 	spawn_objects(coin_scene, floor_tiles, backgroundLayer, player.global_position, number_of_coins, 3)
 	spawn_objects(heart_scene, floor_tiles, backgroundLayer, player.global_position, number_of_hearts, 3)
@@ -105,7 +111,7 @@ func set_random_name_list() -> void:
 		["Borna", "Anica", "Mirko", "Jasna", "Bojan", "Vesna", "Dragan", "Lidija", "Goran", "Tatjana"],
 		["Jake", "Emily", "Connor", "Madison", "Tyler", "Ashley", "Brandon", "Brittany", "Logan", "Hailey"]
 	]
-	if theme_list[theme_id] == "inferno":
+	if theme_id == "inferno":
 		allowed_names = ["Ash", "Blaze", "Ember", "Flint", "Coal", "Inferno", "Kindle", "Pyra", "Scorch", "Cinder"]
 		return
 	var selected = name_lists[randi() % name_lists.size()]
