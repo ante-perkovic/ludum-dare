@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://dig37ujwja70g"]
 
-[ext_resource type="Script" uid="uid://percchd8qwm6" path="res://Collectibles/label.gd" id="1_adxg1"]
 [ext_resource type="FontFile" uid="uid://bybbrkbohplev" path="res://Assets/Fonts/ByteBounce.ttf" id="1_gelp7"]
+[ext_resource type="Script" uid="uid://percchd8qwm6" path="res://Collectibles/label.gd" id="1_v8c3u"]
 
 [node name="Label" type="Node2D"]
-script = ExtResource("1_adxg1")
+script = ExtResource("1_v8c3u")
 
 [node name="Text" type="Label" parent="."]
 offset_left = -9.0

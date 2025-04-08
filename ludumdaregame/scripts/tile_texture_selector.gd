@@ -13,18 +13,28 @@ static func get_random_decoration_inside():
 static func get_random_decoration_outside():
 	return get_random_texture([Vector2i(0, 6), Vector2i(1, 6)])
 
-static func get_tile_texture_coords(tiles: Array, x: int, y: int) -> Vector2i:
-	var current := utils.get_tile_type(tiles, x, y)
-	var left := utils.get_tile_type(tiles, x - 1, y)
-	var right := utils.get_tile_type(tiles, x + 1, y)
-	var top := utils.get_tile_type(tiles, x, y - 1)
-	var bottom := utils.get_tile_type(tiles, x, y + 1)
-	#var top_left := utils.get_tile_type(tiles, x - 1, y - 1)
-	#var top_right := utils.get_tile_type(tiles, x + 1, y - 1)
-	var bottom_left := utils.get_tile_type(tiles, x - 1, y + 1)
-	var bottom_right := utils.get_tile_type(tiles, x + 1, y + 1)
+static func get_tile_texture_coords(tiles: Array, x: int, y: int, enclose_floors=false) -> Vector2i:
+	var current = utils.get_tile_type(tiles, x, y)
+	var left = utils.get_tile_type(tiles, x - 1, y)
+	var right = utils.get_tile_type(tiles, x + 1, y)
+	var top = utils.get_tile_type(tiles, x, y - 1)
+	var bottom = utils.get_tile_type(tiles, x, y + 1)
+	var top_left = utils.get_tile_type(tiles, x - 1, y - 1)
+	var top_right = utils.get_tile_type(tiles, x + 1, y - 1)
+	var bottom_left = utils.get_tile_type(tiles, x - 1, y + 1)
+	var bottom_right = utils.get_tile_type(tiles, x + 1, y + 1)
 
 	if current == utils.TileType.FLOOR:
+		if enclose_floors:
+			if top_left == utils.TileType.WALL and top_right == utils.TileType.WALL:
+				top = utils.TileType.WALL
+			if top_left == utils.TileType.WALL and bottom_left == utils.TileType.WALL:
+				left = utils.TileType.WALL
+			if bottom_right == utils.TileType.WALL and bottom_left == utils.TileType.WALL:
+				bottom = utils.TileType.WALL
+			if top_right == utils.TileType.WALL and bottom_right == utils.TileType.WALL:
+				right = utils.TileType.WALL
+		
 		if left == utils.TileType.WALL and right == utils.TileType.WALL:
 			return Vector2i(2, 5)  # FloorLeftRight
 		elif top == utils.TileType.WALL and bottom == utils.TileType.WALL:
@@ -118,4 +128,4 @@ static func get_tile_texture_coords(tiles: Array, x: int, y: int) -> Vector2i:
 				return wall_top_left
 			else:
 				return wall_left_right
-	return get_random_texture([Vector2i(8, 0)])
+	return get_random_texture([Vector2i(8, 0), Vector2i(8, 1), Vector2i(7, 0), Vector2i(7, 1)])

@@ -35,36 +35,45 @@ func create_level(_current_depth, _allowed_depth):
 	var width = len(level_tiles[0])
 	var height = len(level_tiles)
 
-	var number_of_enemies = current_depth + randi_range(3, 10)
-	var number_of_normal_npc = randi_range(5, 10)
+	var number_of_enemies
+	var number_of_normal_npc
 	var number_of_beacons
+	var number_of_hearts
+	var number_of_coins
+
 	if current_depth <= 1:
 		number_of_beacons = 0
 	else:
 		number_of_beacons = randi_range(1,3)
-	var number_of_hearts = randi_range(2,6)
-	var number_of_coins = current_depth + randi_range(5,20)
 
 	var rand_x = randf()
-	if rand_x < 0.2 and current_depth > 1:
-		number_of_enemies = randi_range(0,2)
-		number_of_normal_npc = randi_range(10, 20)
-		number_of_coins = current_depth*2 + randi_range(10, 30)
+	if current_depth > 1 and rand_x < 0.1:
 		theme_id = "disco"
+		number_of_enemies = randi_range(2,4)
+		number_of_normal_npc = randi_range(14, 20)
+		number_of_coins = current_depth*3 + randi_range(20, 34)
+		number_of_hearts = randi_range(1,3)
+	elif current_depth > 1 and rand_x < 0.35:
+		theme_id = "inferno"
+		number_of_enemies = current_depth*2 + randi_range(8, 12)
+		number_of_normal_npc = randi_range(0, 2)
+		number_of_coins = current_depth + randi_range(0,3)
+		number_of_hearts = randi_range(2,7)
 	else:
 		theme_id = "forest"
+		number_of_enemies = current_depth + randi_range(3, 6)
+		number_of_normal_npc = randi_range(4, 7)
+		number_of_coins = current_depth + randi_range(0,4)
+		number_of_hearts = randi_range(1,3)
 	set_random_name_list()
 
 	# Draw foreground
-	var tile_set_id
-	if theme_id == "forest":
-		tile_set_id = 0
-	else:
-		tile_set_id = 1
+	var tile_set_id = ["forest", "disco", "inferno"].find(theme_id)
 	for y in range(-background_margin, height + background_margin):
 		for x in range(-background_margin, width + background_margin):
 			var coords = Vector2i(x, y)
-			var tile_coords = tile_selector.get_tile_texture_coords(level_tiles, x, y)
+			var enclose_floors = theme_id == "disco"
+			var tile_coords = tile_selector.get_tile_texture_coords(level_tiles, x, y, enclose_floors)
 			if tile_coords != null:
 				backgroundLayer.set_cell(coords, tile_set_id, tile_coords)
 			# Used for spawning objects later
@@ -92,17 +101,13 @@ func create_level(_current_depth, _allowed_depth):
 		spawn_npcs(npc_scene, floor_tiles, backgroundLayer, number_of_dreaming_npc, true, current_depth+1, allowed_depth - 1)
 	spawn_npcs(npc_scene, floor_tiles, backgroundLayer, number_of_normal_npc, false, 0, 0)
 
-	# Spawn enemies
-	spawn_objects(enemy_scene, floor_tiles, backgroundLayer, player.global_position, number_of_enemies, 4)
-	
-	# Spawn weapons
-	# spawn_weapons(weapon_scenes.pick_random(), floor_tiles, backgroundLayer, player.global_position, 2, 4)
-	
-	# Spawn coins
-	
-	spawn_objects(coin_scene, floor_tiles, backgroundLayer, player.global_position, number_of_coins, 3)
-	spawn_objects(heart_scene, floor_tiles, backgroundLayer, player.global_position, number_of_hearts, 3)
+
 	spawn_objects(beacon_scene, floor_tiles, backgroundLayer, player.global_position, number_of_beacons, 3)
+	spawn_objects(enemy_scene, floor_tiles, backgroundLayer, player.global_position, number_of_enemies, 4)
+	# spawn_weapons(weapon_scenes.pick_random(), floor_tiles, backgroundLayer, player.global_position, 2, 4)
+	spawn_objects(heart_scene, floor_tiles, backgroundLayer, player.global_position, number_of_hearts, 3)
+	spawn_objects(coin_scene, floor_tiles, backgroundLayer, player.global_position, number_of_coins, 3)
+	
 
 func set_random_name_list() -> void:
 	var name_lists = [
@@ -146,7 +151,8 @@ func spawn_objects(scene, floor_tiles, tile_map: TileMapLayer, player_pos, count
 
 		var coords = null
 		while true:
-			if floor_tiles.is_empty(): break
+			if floor_tiles.is_empty():
+				return
 			pos = get_random_floor_tile(floor_tiles)
 			coords = tile_map.to_global(tile_map.map_to_local(pos))
 			var dist = player_pos.distance_to(coords) / tile_map.tile_set.tile_size.x

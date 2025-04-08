@@ -10,6 +10,8 @@ var move_direction := Vector2.ZERO
 var is_moving := false
 var is_chasing := false
 var health:int = 100;
+var shoot_time = 2
+var _first_shot = true
 
 @onready var behavior_timer := Timer.new()
 @onready var _animated_sprite = $AnimatedSprite2D
@@ -115,7 +117,11 @@ func die():
 
 func set_up_shooting_timer():
 	var shoot_timer = Timer.new()
-	shoot_timer.wait_time = 2.0
+	if _first_shot:
+		shoot_timer.wait_time = shoot_time/2 + randf_range(0, shoot_time)
+		_first_shot = false
+	else:
+		shoot_timer.wait_time = shoot_time
 	shoot_timer.one_shot = false
 	shoot_timer.autostart = true
 	add_child(shoot_timer)
@@ -128,18 +134,11 @@ func shoot_projectile():
 		return
 	# create projectile and set its position
 	var projectile = projectile_scene.instantiate()
-	projectile.source = self
-	projectile.global_position = global_position
-	
-	# compute direction of a player
-	var direction: Vector2 = (player.global_position - global_position).normalized()
-	
-	# set projectile velocity and rotate
-	projectile.velocity = direction * projectile.speed
-	projectile.rotation = direction.angle()
-	
-	# add projectile to scene tree
 	get_parent().add_child(projectile)
+	projectile.source = self
+	var target: Vector2 = get_global_mouse_position()
+	var direction: Vector2 = (player.global_position - global_position).normalized()
+	projectile.transform = Transform2D(direction.angle(), global_position)
 
 
 func update_health_bar():

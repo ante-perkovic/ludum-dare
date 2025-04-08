@@ -46,7 +46,7 @@ size = Vector2(14, 14)
 
 [node name="StaticBody2D" type="StaticBody2D" groups=["beacon"]]
 z_index = -1
-collision_layer = 256
+collision_layer = 16
 collision_mask = 0
 script = ExtResource("1_gpd2j")
 

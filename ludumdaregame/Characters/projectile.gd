@@ -1,32 +1,16 @@
-extends Node2D
+extends Area2D
 
-
-var velocity: Vector2 = Vector2.ZERO
 @export var source: Node = null
+var speed = 400
 
-@export var speed = 1000
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
+func _physics_process(delta):
+	position += transform.x * speed * delta
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	position += velocity * delta
-
-# called when something enteres body
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	
-	# you cannot hit yourself
+func _on_bullet_body_entered(_body: Node2D):
+	var body = _body.get_parent()  # We set up bodies 
 	if body == source:
 		return
-	
-	# check if body is enemy or player - take damage
 	if body.is_in_group("enemy") or body.is_in_group("player"):
 		body.take_damage(20)
-	
-	# destroy projectile
 	queue_free()
-
-# TODO:
-# destroy when out of map

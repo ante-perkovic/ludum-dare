@@ -236,20 +236,20 @@ radius = 7.0
 
 [node name="NPC" type="CharacterBody2D" groups=["npc"]]
 y_sort_enabled = true
-position = Vector2(0, -11)
+collision_layer = 8
 script = ExtResource("1_32lk6")
 npc_move_speed = 50.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_32lk6")
 animation = &"bruce_default"
 
 [node name="NameLabel" type="Label" parent="."]
 offset_left = -20.0
-offset_top = -17.0
+offset_top = -28.0
 offset_right = 60.0
-offset_bottom = 3.0
+offset_bottom = -8.0
 scale = Vector2(0.5, 0.5)
 theme_override_fonts/font = ExtResource("2_32lk6")
 text = "HELLO"
@@ -257,9 +257,8 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="AnimatedInteraction" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -24)
+position = Vector2(0, -35)
 sprite_frames = SubResource("SpriteFrames_6kttr")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 11)
+[node name="PhisycsCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_6ybb6")

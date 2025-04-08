@@ -11,12 +11,15 @@ var PLAYER_MOVE_SPEED_DEFAULT = 150
 var PLAYER_MOVE_SPEED_SPRINT = 225
 
 @onready var _animated_sprite = $AnimatedSprite2D
+@onready var _blood_sprite = $AnimatedSprite2D/BloodSprite
 
 var _last_position: Vector2
 var _is_interacting: bool
 var _prev_npc_move_speed = null
 
 func _process(_delta):
+	if game.health <= 0:
+		return
 	var velocity = Vector2.ZERO
 	if Input.is_action_pressed("right"):
 		velocity.x += 1
@@ -72,7 +75,7 @@ func _physics_process(_delta):
 	#Move and Slide function uses velocity or character body to move the character on map
 	if !_is_interacting:
 		move_and_slide()
-	
+
 
 func interact():
 	var interactable = get_nearest_interactable()
@@ -102,6 +105,8 @@ func finish_interact_with_npc(npc):
 
 # checks input events
 func _input(event: InputEvent) -> void:
+	if game.health <= 0:
+		return
 	# action - shoots
 	if event.is_action_pressed("shoot"):
 		shoot_projectile()
@@ -121,52 +126,31 @@ func _input(event: InputEvent) -> void:
 		
 # function for shooting
 func shoot_projectile():
-	
 	if weapon.fire() == false:
 		return
 	
 	# create projectile and set its position
 	var projectile = projectile_scene.instantiate()
+	get_parent().add_child(projectile)
 	projectile.source = self
-	projectile.global_position = global_position
-	
-	# calc projectile direction
 	var target: Vector2 = get_global_mouse_position()
 	var direction: Vector2 = (target-global_position).normalized()
 	var rng = RandomNumberGenerator.new()
 	direction = direction.rotated(deg_to_rad(rng.randf_range(-weapon.spread_angle_degrees, weapon.spread_angle_degrees)))
-	
-	# set projectile velocity and rotate
-	projectile.velocity = direction * projectile.speed
-	projectile.rotation = direction.angle()
-	
-	# add projectile to scene tree
-	get_parent().add_child(projectile)
+	projectile.transform = Transform2D(direction.angle(), global_position)
 
-# checks if there are NPCs nearby and enters their dream
-func _get_overlapping_npcs():
-	var nearby_npcs
-	if _animated_sprite.flip_h:
-		nearby_npcs = $InteractionAreaRight.get_overlapping_bodies()
-	else:
-		nearby_npcs = $InteractionAreaLeft.get_overlapping_bodies()
-	var new_npcs = []
-	for npc in nearby_npcs:
-		if npc.is_in_group("npc") and npc.is_dreaming:
-			new_npcs.append(npc)
-	return new_npcs
 
 func _get_interactable_bodies():
-	var nearby_bodies = $WeaponPickupArea.get_overlapping_bodies()
+	var nearby_bodies = $InteractionArea.get_overlapping_bodies()
 	var bodies = []
 	for body in nearby_bodies:
-		if body.is_in_group("beacon"):
+		if body.is_in_group("beacon") or (body.is_in_group("npc") and body.is_dreaming):
 			bodies.append(body)
 	return bodies
 
 func get_nearest_interactable():
 	var nearest = null
-	var bodies = _get_interactable_bodies() + _get_overlapping_npcs()
+	var bodies = _get_interactable_bodies()
 	var nearest_dist = null
 	for body in bodies:
 		var dist = global_position.distance_to(body.global_position)
@@ -176,12 +160,19 @@ func get_nearest_interactable():
 	return nearest
 
 func take_damage(amount: int):
+	if game.health <= 0:
+		return
 	game.health -= amount
 	if game.health <= 0:
 		die()
 
 func die():
 	game.game_over()
+	_animated_sprite.position += Vector2(0, 8)
+	_animated_sprite.play("die")
+	_animated_sprite.z_as_relative = false
+	_animated_sprite.z_index = -1
+	_blood_sprite.visible = true
 
 func add_coin():
 	coins += 1
