@@ -1,18 +1,18 @@
 [gd_scene load_steps=10 format=3 uid="uid://ch3d2bblffjwm"]
 
 [ext_resource type="Script" uid="uid://waynn8n8vk1q" path="res://Collectibles/beacon.gd" id="1_gpd2j"]
-[ext_resource type="Texture2D" uid="uid://f66vepbglclh" path="res://Assets/Tilesets/forest_tileset.png" id="2_sxkyb"]
+[ext_resource type="Texture2D" uid="uid://cxo4hvf6kgm4u" path="res://Assets/Tilesets/dungeon_tileset.png" id="2_gpd2j"]
 [ext_resource type="Texture2D" uid="uid://q1enyo0l6t25" path="res://Assets/UI/interact.png" id="3_1fld8"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ll2h2"]
-atlas = ExtResource("2_sxkyb")
-region = Rect2(128, 48, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sxkyb"]
+atlas = ExtResource("2_gpd2j")
+region = Rect2(144, 48, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_23d8r"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ll2h2")
+"texture": SubResource("AtlasTexture_sxkyb")
 }],
 "loop": true,
 "name": &"default",
