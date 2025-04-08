@@ -28,6 +28,9 @@ func _input(event):
 func enter_level(level_name, npc):
 	# Level name is defined by NPC it was entered in
 	npc_map[level_name] = npc
+	if npc != null and npc.npc_name == "The Chosen One":
+		game_won()
+		return
 	if current_level:
 		level_stack.append(current_level)
 	var previous_level = current_level
@@ -71,6 +74,14 @@ func game_over():
 	dream_depth_label.set_text("Max dream depth: "+str(max_dream_depth))
 	game_over_layer.visible = true
 	ui_layer.visible = false
+
+func game_won():
+	game_over()
+	var game_over_layer: Control = $GameInterfaceCanvas/MarginContainer/GameOver
+	var title_label: Label = game_over_layer.find_child("GameOverLabel")
+	title_label.set_text("You won!")
+	
+	
 
 func change_level(prev_level: int, next_level: int):
 	remove_child(level_map[prev_level])

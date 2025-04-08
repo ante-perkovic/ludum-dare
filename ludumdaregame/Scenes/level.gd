@@ -133,7 +133,10 @@ func spawn_npcs(npc_scene, floor_tiles, tile_map: TileMapLayer, count: int, is_d
 		var npc = npc_scene.instantiate()
 		npc.current_depth = current_depth
 		var npc_name = allowed_names[randi() % allowed_names.size()]
-		npc.set_npc_name(npc_name)	
+		if is_dreaming and current_depth > 4 and randf() < 0.05:
+			npc.set_npc_name("The Chosen One")
+		else:
+			npc.set_npc_name(npc_name)
 		if allowed_depth == -1:
 			npc.allowed_depth = -1
 		else:

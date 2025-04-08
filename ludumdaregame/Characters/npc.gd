@@ -26,7 +26,9 @@ func set_npc_name(name: String) -> void:
 		_name_label.text = npc_name
 		_name_label.visible = true
 		if is_dreaming:
-			if allowed_depth == -1:
+			if name == "The Chosen One":
+				_name_label.modulate = Color(0.15, 0.15, 1)
+			elif allowed_depth == -1:
 				_name_label.modulate = Color(1, 0.3, 0.3)
 			else:
 				_name_label.modulate = Color(1, 1, 0.3)
