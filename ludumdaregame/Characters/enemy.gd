@@ -17,6 +17,7 @@ var _first_shot = true
 @onready var _animated_sprite = $AnimatedSprite2D
 var _last_position: Vector2
 @onready var _healthbar = $HealthBar
+@onready var enemy_death_sound: AudioStreamPlayer2D = $EnemyDeathSound
 
 func _process(_delta):
 	var velocity = (global_position - _last_position) / _delta
@@ -113,6 +114,9 @@ func die():
 	var text_label = floatingText.find_child("Text")
 	text_label.set_text("+"+str(get_node("/root/Game").SCORE_KILL))
 	get_tree().get_root().add_child(floatingText)
+	enemy_death_sound.reparent(get_node("/root/Game/Level"), true)
+	enemy_death_sound.finished.connect(enemy_death_sound.queue_free)
+	enemy_death_sound.play()
 	queue_free()
 
 func set_up_shooting_timer():
@@ -138,7 +142,7 @@ func shoot_projectile():
 	projectile.source = self
 	var target: Vector2 = get_global_mouse_position()
 	var direction: Vector2 = (player.global_position - global_position).normalized()
-	projectile.transform = Transform2D(direction.angle(), global_position)
+	projectile.transform = Transform2D(direction.angle(), $AnimatedSprite2D/GunPosition.global_position)
 
 
 func update_health_bar():

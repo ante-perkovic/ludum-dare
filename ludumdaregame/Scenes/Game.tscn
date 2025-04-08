@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cmkgwb33fuov"]
+[gd_scene load_steps=10 format=3 uid="uid://cmkgwb33fuov"]
 
 [ext_resource type="Script" uid="uid://tq0kvxcrs8uo" path="res://Scenes/game.gd" id="1_j5yw3"]
 [ext_resource type="Script" uid="uid://bl2htilkflcvq" path="res://Scenes/game_interface.gd" id="2_j5yw3"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://b6stlgdqhloka" path="res://Assets/UI/ProgressBar/under.png" id="4_7lihs"]
 [ext_resource type="Texture2D" uid="uid://2hvvmb5twyv4" path="res://Assets/UI/ProgressBar/over.png" id="5_fgofq"]
 [ext_resource type="Texture2D" uid="uid://chdlyykf8ygvh" path="res://Assets/UI/ProgressBar/progress.png" id="6_2irst"]
+[ext_resource type="AudioStream" uid="uid://cxcouahectl2c" path="res://Assets/Audio/soundtrack.mp3" id="8_2irst"]
+[ext_resource type="AudioStream" uid="uid://capu8dxr6ujjq" path="res://Assets/Audio/enter-dream.mp3" id="9_bf53h"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_j5yw3")
@@ -138,3 +140,12 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Press q or esc to exit..."
 horizontal_alignment = 3
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_2irst")
+volume_db = -20.0
+autoplay = true
+parameters/looping = true
+
+[node name="EnterDreamSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_bf53h")

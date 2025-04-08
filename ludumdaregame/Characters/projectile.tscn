@@ -1,28 +1,36 @@
-[gd_scene load_steps=5 format=3 uid="uid://bl2fh1rdgax3c"]
+[gd_scene load_steps=6 format=3 uid="uid://bl2fh1rdgax3c"]
 
 [ext_resource type="Script" uid="uid://bk1tb0ktmsk5t" path="res://Characters/projectile.gd" id="1_cquv2"]
 [ext_resource type="Texture2D" uid="uid://b37yj21a2i5ax" path="res://Assets/characters.png" id="2_5jp1e"]
+[ext_resource type="AudioStream" uid="uid://duwjpqb4m672v" path="res://Assets/Audio/shoot-sound.mp3" id="3_n0cff"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n0cff"]
 atlas = ExtResource("2_5jp1e")
 region = Rect2(176, 24, 16, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5jp1e"]
-size = Vector2(10, 4)
+size = Vector2(8, 4)
 
 [node name="Area2D" type="Area2D"]
+y_sort_enabled = true
 collision_layer = 32
 collision_mask = 33
 script = ExtResource("1_cquv2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-1.19209e-07, 0)
-scale = Vector2(0.6875, 0.5)
+scale = Vector2(0.45, 0.36)
 texture = SubResource("AtlasTexture_n0cff")
 
 [node name="BulletBody" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5jp1e")
 debug_color = Color(0.939871, 0.168677, 0.454205, 0.42)
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_n0cff")
+volume_db = -5.0
+max_distance = 800.0
+attenuation = 2.0
 
 [connection signal="area_entered" from="." to="." method="_on_bullet_body_entered"]
 [connection signal="body_entered" from="." to="." method="_on_bullet_body_entered"]

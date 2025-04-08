@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://cn2yww38pccv6"]
+[gd_scene load_steps=25 format=3 uid="uid://cn2yww38pccv6"]
 
 [ext_resource type="Script" uid="uid://cy2fyjv64so4l" path="res://Characters/player.gd" id="1_eovys"]
 [ext_resource type="Texture2D" uid="uid://b37yj21a2i5ax" path="res://Assets/characters.png" id="2_eovys"]
+[ext_resource type="AudioStream" uid="uid://dnrngryibfgt3" path="res://Assets/Audio/enemy-scream.mp3" id="2_vb825"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_04wy3"]
 load_path = "res://.godot/imported/characters.png-b3722e77d80a2c5d1718add7ba80e281.ctex"
@@ -80,13 +81,13 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 3.0,
 "texture": SubResource("AtlasTexture_mevwr")
 }, {
-"duration": 1.0,
+"duration": 0.1,
 "texture": SubResource("AtlasTexture_iga2k")
 }],
-"loop": false,
+"loop": true,
 "name": &"die",
 "speed": 1.0
 }, {
@@ -152,16 +153,22 @@ y_sort_enabled = true
 collision_layer = 2
 script = ExtResource("1_eovys")
 
+[node name="PlayerDeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_vb825")
+volume_db = -4.0
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -9)
 sprite_frames = SubResource("SpriteFrames_642pg")
-animation = &"die"
 
 [node name="BloodSprite" type="Sprite2D" parent="AnimatedSprite2D"]
 visible = false
 z_index = -1
 position = Vector2(-1, 4)
 texture = SubResource("AtlasTexture_y0e2x")
+
+[node name="GunPosition" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(-6, 3)
 
 [node name="PhysicsCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_vb825")

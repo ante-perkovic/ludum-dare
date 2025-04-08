@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bto13b8rslrsy"]
+[gd_scene load_steps=7 format=3 uid="uid://bto13b8rslrsy"]
 
 [ext_resource type="Texture2D" uid="uid://cxo4hvf6kgm4u" path="res://Assets/Tilesets/dungeon_tileset.png" id="1_7gp14"]
 [ext_resource type="Script" uid="uid://cupvfvolrctrj" path="res://Collectibles/Heart/heart.gd" id="1_eax7h"]
+[ext_resource type="AudioStream" uid="uid://cm07xdqriepek" path="res://Assets/Audio/health-effect.mp3" id="2_drfu6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eax7h"]
 atlas = ExtResource("1_7gp14")
@@ -24,6 +25,10 @@ radius = 7.0
 [node name="Heart" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_eax7h")
+
+[node name="HeartCollectSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_drfu6")
+volume_db = -4.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true

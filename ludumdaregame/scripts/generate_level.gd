@@ -42,14 +42,12 @@ func create_room_tiles(room_type: int) -> Array:
 
 	return tiles
 
-func generate_level_tiles():
+func generate_level_tiles(number_of_rooms: int):
 	load_rooms()
 	var rng = RandomNumberGenerator.new()
 
 	var room = create_room_tiles(utils.RoomType.BIG)
 	room = utils.add_margin(room)
-	
-	var number_of_rooms = rng.randi_range(3, 6)
 
 	for i in range(number_of_rooms):
 		rng.randomize()

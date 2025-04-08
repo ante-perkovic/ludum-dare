@@ -90,6 +90,7 @@ func interact_with_npc(npc):
 	_prev_npc_move_speed = npc.npc_move_speed
 	npc.npc_move_speed = 0
 	var interact_timer = Timer.new()
+	game.enter_dream_sound.play()
 	interact_timer.wait_time = 1
 	interact_timer.one_shot = true
 	interact_timer.autostart = true
@@ -137,7 +138,7 @@ func shoot_projectile():
 	var direction: Vector2 = (target-global_position).normalized()
 	var rng = RandomNumberGenerator.new()
 	direction = direction.rotated(deg_to_rad(rng.randf_range(-weapon.spread_angle_degrees, weapon.spread_angle_degrees)))
-	projectile.transform = Transform2D(direction.angle(), global_position)
+	projectile.transform = Transform2D(direction.angle(), $AnimatedSprite2D/GunPosition.global_position)
 
 
 func _get_interactable_bodies():
@@ -168,6 +169,7 @@ func take_damage(amount: int):
 
 func die():
 	game.game_over()
+	$PlayerDeathSound.play()
 	_animated_sprite.position += Vector2(0, 8)
 	_animated_sprite.play("die")
 	_animated_sprite.z_as_relative = false

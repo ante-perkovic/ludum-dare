@@ -30,7 +30,8 @@ func create_level(_current_depth, _allowed_depth):
 	
 
 	var floor_tiles: Array[Vector2i] = []
-	var level_tiles = level_generator.generate_level_tiles()
+	var number_of_rooms = randi_range(5, 7)
+	var level_tiles = level_generator.generate_level_tiles(number_of_rooms)
 
 	var width = len(level_tiles[0])
 	var height = len(level_tiles)
@@ -44,24 +45,24 @@ func create_level(_current_depth, _allowed_depth):
 	if current_depth <= 1:
 		number_of_beacons = 0
 	else:
-		number_of_beacons = randi_range(1,3)
+		number_of_beacons = randi_range(2,4)
 
 	var rand_x = randf()
 	if current_depth > 1 and rand_x < 0.1:
 		theme_id = "disco"
-		number_of_enemies = randi_range(2,4)
+		number_of_enemies = randi_range(1,4)
 		number_of_normal_npc = randi_range(14, 20)
 		number_of_coins = current_depth*3 + randi_range(20, 34)
 		number_of_hearts = randi_range(1,3)
 	elif current_depth > 1 and rand_x < 0.35:
 		theme_id = "inferno"
-		number_of_enemies = current_depth*2 + randi_range(8, 12)
+		number_of_enemies = current_depth + randi_range(4, 8)
 		number_of_normal_npc = randi_range(0, 2)
 		number_of_coins = current_depth + randi_range(0,3)
 		number_of_hearts = randi_range(2,7)
 	else:
 		theme_id = "forest"
-		number_of_enemies = current_depth + randi_range(3, 6)
+		number_of_enemies = current_depth + randi_range(2, 4)
 		number_of_normal_npc = randi_range(4, 7)
 		number_of_coins = current_depth + randi_range(0,4)
 		number_of_hearts = randi_range(1,3)
@@ -133,7 +134,7 @@ func spawn_npcs(npc_scene, floor_tiles, tile_map: TileMapLayer, count: int, is_d
 		var npc = npc_scene.instantiate()
 		npc.current_depth = current_depth
 		var npc_name = allowed_names[randi() % allowed_names.size()]
-		if is_dreaming and current_depth > 4 and randf() < 0.05:
+		if is_dreaming and current_depth > 4 and randf() < 0.1:
 			npc.set_npc_name("The Chosen One")
 		else:
 			npc.set_npc_name(npc_name)

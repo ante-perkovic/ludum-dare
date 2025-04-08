@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bm0vfbpsk8sa6"]
+[gd_scene load_steps=7 format=3 uid="uid://bm0vfbpsk8sa6"]
 
 [ext_resource type="Script" uid="uid://cmlflqb05i7jj" path="res://Collectibles/Coin/coin.gd" id="1_ju2rj"]
 [ext_resource type="Texture2D" uid="uid://cxo4hvf6kgm4u" path="res://Assets/Tilesets/dungeon_tileset.png" id="2_ju2rj"]
+[ext_resource type="AudioStream" uid="uid://gkn1h743sk3n" path="res://Assets/Audio/coin-collect.mp3" id="2_vpbvf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c34ob"]
 
@@ -23,6 +24,10 @@ animations = [{
 [node name="Coin" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_ju2rj")
+
+[node name="CoinCollectSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_vpbvf")
+volume_db = -10.0
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 16

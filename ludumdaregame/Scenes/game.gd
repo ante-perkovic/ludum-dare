@@ -1,5 +1,7 @@
 extends Node
 
+@onready var enter_dream_sound: AudioStreamPlayer = $EnterDreamSound
+
 var level_stack: Array = [] # Remembers level names in entry order
 var level_map: Dictionary[int, Node] = {} # Remembers all levels by names (names are set by NPC script)
 var npc_map: Dictionary[int, Node] = {}
@@ -9,9 +11,10 @@ var score: int = 0
 var max_dream_depth: int = 0
 var health: int = 100
 
-var SCORE_KILL = 20
+var SCORE_KILL = 30
 var SCORE_COIN = 10
-var SCORE_DREAM = 30
+var SCORE_DREAM = 50
+var SCORE_WIN = 300
 var DMG_EXIT_LEVEL = 20
 var HEAL_AMMOUNT = 20
 
@@ -35,7 +38,7 @@ func enter_level(level_name, npc):
 		level_stack.append(current_level)
 	var previous_level = current_level
 
-	var new_level = null
+	var new_level: Node2D = null
 	if level_name not in level_map:
 		if npc:
 			score += SCORE_DREAM
@@ -76,12 +79,12 @@ func game_over():
 	ui_layer.visible = false
 
 func game_won():
+	score += SCORE_WIN
 	game_over()
 	var game_over_layer: Control = $GameInterfaceCanvas/MarginContainer/GameOver
 	var title_label: Label = game_over_layer.find_child("GameOverLabel")
 	title_label.set_text("You won!")
-	
-	
+
 
 func change_level(prev_level: int, next_level: int):
 	remove_child(level_map[prev_level])

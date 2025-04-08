@@ -113,8 +113,9 @@ theme = ExtResource("1_853f1")
 theme_override_font_sizes/font_size = 26
 text = "enter NPC dreams
 deeper and deeper...
-kill enemies that try
-to stop you."
+Find the chosen one
+and kill enemies that
+try to stop you."
 
 [node name="CreatedForLabel" type="Label" parent="."]
 layout_mode = 1
