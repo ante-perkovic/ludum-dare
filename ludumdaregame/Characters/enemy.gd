@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var detection_radius: float = 100.0  # Distance to start chasing
 @export var player: CharacterBody2D
 @export var projectile_scene: PackedScene = preload("res://Characters/projectile.tscn")
+var FloatingTextScene = preload("res://Collectibles/Label.tscn") 
 
 var move_direction := Vector2.ZERO
 var is_moving := false
@@ -104,7 +105,12 @@ func take_damage(amount: int):
 func die():
 	var game = find_parent("Game")
 	game.score += game.SCORE_KILL
-	# TODO: play animation
+	var floatingText = FloatingTextScene.instantiate()
+	floatingText.global_position = position  
+	floatingText.modulate = Color(0.9,0.9,0.35)
+	var text_label = floatingText.find_child("Text")
+	text_label.set_text("+"+str(get_node("/root/Game").SCORE_KILL))
+	get_tree().get_root().add_child(floatingText)
 	queue_free()
 
 func set_up_shooting_timer():

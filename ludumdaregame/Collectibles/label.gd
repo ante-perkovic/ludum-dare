@@ -1,4 +1,5 @@
-extends Label
+extends Node2D
+
 
 func _ready():
 	
@@ -8,4 +9,3 @@ func _ready():
 	timer.autostart = true
 	add_child(timer)
 	timer.timeout.connect(queue_free)
-	
