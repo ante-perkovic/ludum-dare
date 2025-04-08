@@ -77,37 +77,33 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rtu5t"]
-size = Vector2(16.5, 30.5)
+[sub_resource type="CircleShape2D" id="CircleShape2D_mpxx0"]
+radius = 8.0
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
 y_sort_enabled = true
+position = Vector2(-1, -8)
 script = ExtResource("1_rtu5t")
 enemy_move_speed = 30.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-8, -18)
+y_sort_enabled = true
+position = Vector2(-7, -18)
 sprite_frames = SubResource("SpriteFrames_kptum")
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemy"]]
-position = Vector2(0.75, 0.75)
-shape = SubResource("RectangleShape2D_rtu5t")
+position = Vector2(1, 8)
+shape = SubResource("CircleShape2D_mpxx0")
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 custom_minimum_size = Vector2(20, 0)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -11.0
+offset_left = -10.0
 offset_top = -18.0
-offset_right = 11.0
+offset_right = 12.0
 offset_bottom = -14.0
-grow_horizontal = 2
-grow_vertical = 2
 nine_patch_stretch = true
 texture_under = ExtResource("2_mpxx0")
 texture_over = ExtResource("3_3tsq0")
 texture_progress = ExtResource("4_gh648")
+metadata/_edit_use_anchors_ = true

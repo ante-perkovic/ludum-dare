@@ -15,13 +15,13 @@ func create_level(_current_depth, _allowed_depth):
 	# for side quest NPC, use -1 if the main level
 	var level_generator = get_node("LevelGenerator")
 	var player = get_node("Player")
-	var backgroundLayer: TileMapLayer = get_node("BackgroundLayer")
-	var foregroundLayer: TileMapLayer = get_node("ForegroundLayer")
 	var npc_scene = preload("res://Characters/npc.tscn")
 	var enemy_scene = preload("res://Characters/enemy.tscn")
 	var coin_scene = preload("res://Collectibles/Coin/coin.tscn")
 	var heart_scene = preload("res://Collectibles/Heart/Heart.tscn")
 	var beacon_scene = preload("res://Collectibles/beacon.tscn")
+	var backgroundLayer: TileMapLayer = get_node("BackgroundLayer")
+	var foregroundLayer: TileMapLayer = get_node("ForegroundLayer")
 	var weapon_scenes = [
 		preload("res://Weapons/AssaultRifle.tscn"),
 		preload("res://Weapons/Shotgun.tscn"),
@@ -65,7 +65,7 @@ func create_level(_current_depth, _allowed_depth):
 	
 	# Teleport player to some position
 	if player and floor_tiles.size() > 0:
-		player.global_position = backgroundLayer.map_to_local(get_random_floor_tile(floor_tiles))
+		player.global_position = backgroundLayer.to_global(backgroundLayer.map_to_local(get_random_floor_tile(floor_tiles)))
 
 	# Spawn NPCS
 	if allowed_depth == -1:
@@ -116,7 +116,7 @@ func set_random_name_list() -> void:
 func get_random_floor_tile(floor_tiles: Array[Vector2i]) -> Vector2i:
 	return floor_tiles.pop_back()
 
-func spawn_npcs(npc_scene, floor_tiles, tile_map, count: int, is_dreaming:bool, current_depth: int, allowed_depth: int) -> void:
+func spawn_npcs(npc_scene, floor_tiles, tile_map: TileMapLayer, count: int, is_dreaming:bool, current_depth: int, allowed_depth: int) -> void:
 	for i in count:
 		if floor_tiles.is_empty(): break
 		var npc = npc_scene.instantiate()
@@ -128,21 +128,23 @@ func spawn_npcs(npc_scene, floor_tiles, tile_map, count: int, is_dreaming:bool, 
 		else:
 			npc.allowed_depth = randi_range(0, allowed_depth)
 		npc.is_dreaming = is_dreaming
-		npc.global_position = tile_map.map_to_local(get_random_floor_tile(floor_tiles))
+		npc.global_position = tile_map.to_global(tile_map.map_to_local(get_random_floor_tile(floor_tiles)))
 		add_child(npc)
 
 
-func spawn_objects(scene, floor_tiles, tile_map, player_pos, count, min_distance):
+func spawn_objects(scene, floor_tiles, tile_map: TileMapLayer, player_pos, count, min_distance):
 	for i in count:
 		if floor_tiles.is_empty(): break
 		var obj = scene.instantiate()
 		var pos: Vector2i
 
+		var coords = null
 		while true:
 			if floor_tiles.is_empty(): break
 			pos = get_random_floor_tile(floor_tiles)
-			var dist = player_pos.distance_to(tile_map.map_to_local(pos)) / tile_map.tile_set.tile_size.x
+			coords = tile_map.to_global(tile_map.map_to_local(pos))
+			var dist = player_pos.distance_to(coords) / tile_map.tile_set.tile_size.x
 			if dist > min_distance:
 				break
-		obj.global_position = tile_map.map_to_local(pos)
+		obj.global_position = coords
 		add_child(obj)

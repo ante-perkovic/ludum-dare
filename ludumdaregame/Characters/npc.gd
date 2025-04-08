@@ -15,7 +15,10 @@ var npc_name = null
 @onready var _animated_sprite = $AnimatedSprite2D
 @onready var _animated_interaction = $AnimatedInteraction
 var _last_position: Vector2
-	
+var npc_animation_name = null
+
+var npc_animation_name_list = ["bruce", "tenzin", "jimmy"]
+
 
 func set_npc_name(name: String) -> void:
 	npc_name = name
@@ -33,17 +36,17 @@ func _process(_delta):
 	if abs(velocity.x) > 0.1:
 		_animated_sprite.flip_h = velocity.x > 0
 	if velocity.length() > 0.1:
-		if _animated_sprite.animation != "running":
-			_animated_sprite.play("running")
+		if _animated_sprite.animation != npc_animation_name+"_running":
+			_animated_sprite.play(npc_animation_name+"_running")
 	else:
-		if _animated_sprite.animation != "default":
-			_animated_sprite.play("default")
+		if _animated_sprite.animation != npc_animation_name+"_default":
+			_animated_sprite.play(npc_animation_name+"_default")
 	_last_position = global_position
 	
 	var player = get_node("../Player")
 	var nearest = player.get_nearest_interactable()
 	if nearest == self:
-		_animated_interaction.play("default")
+		_animated_interaction.play(npc_animation_name+"_default")
 		_animated_interaction.show()
 	else:
 		_animated_interaction.hide()
@@ -52,6 +55,7 @@ func _body_entered(body: Node2D)->void:
 	print(body)
 
 func _ready():
+	npc_animation_name = npc_animation_name_list[randi()%len(npc_animation_name_list)]
 	_last_position = global_position
 	if npc_name:
 		set_npc_name(npc_name)

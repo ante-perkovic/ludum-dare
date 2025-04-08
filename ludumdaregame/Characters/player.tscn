@@ -126,11 +126,13 @@ radius = 19.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
+position = Vector2(-2, -9)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_eovys")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_642pg")
 animation = &"interact"
 
@@ -141,13 +143,13 @@ shape = SubResource("CircleShape2D_vb825")
 [node name="InteractionAreaLeft" type="Area2D" parent="."]
 
 [node name="CollisionShapeLeft2D" type="CollisionShape2D" parent="InteractionAreaLeft"]
-position = Vector2(-14, 2)
+position = Vector2(-13, 2)
 shape = SubResource("CircleShape2D_eovys")
 
 [node name="InteractionAreaRight" type="Area2D" parent="."]
 
 [node name="CollisionShapeRight2D" type="CollisionShape2D" parent="InteractionAreaRight"]
-position = Vector2(16, 2)
+position = Vector2(17, 2)
 shape = SubResource("CircleShape2D_eovys")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -158,6 +160,7 @@ collision_layer = 257
 collision_mask = 257
 
 [node name="WeaponCollision" type="CollisionShape2D" parent="WeaponPickupArea"]
+position = Vector2(2, 0)
 shape = SubResource("CircleShape2D_65n15")
 
 [connection signal="body_entered" from="WeaponPickupArea" to="." method="_on_weapon_pickup_area_body_entered"]
