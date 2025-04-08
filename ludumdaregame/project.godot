@@ -21,6 +21,7 @@ enemy="for enemies"
 npc=""
 player=""
 weapon=""
+beacon=""
 
 [input]
 

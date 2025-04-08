@@ -81,6 +81,7 @@ animations = [{
 size = Vector2(16.5, 30.5)
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
+y_sort_enabled = true
 script = ExtResource("1_rtu5t")
 enemy_move_speed = 30.0
 

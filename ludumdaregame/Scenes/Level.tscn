@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dvdnk3v7x4nyg" path="res://scripts/generate_level.gd" id="4_fuudy"]
 
 [node name="Level" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_q1cbv")
 
 [node name="BackgroundLayer" type="TileMapLayer" parent="."]

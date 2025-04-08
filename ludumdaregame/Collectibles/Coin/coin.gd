@@ -4,7 +4,6 @@ var FloatingTextScene = preload("res://Collectibles/Coin/Label.tscn")  # Adjust 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		print("a")
 		body.add_coin()
 		# Instance the floating text and set its position
 		var floatingText = FloatingTextScene.instantiate()

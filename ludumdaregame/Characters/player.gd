@@ -15,6 +15,7 @@ var PLAYER_MOVE_SPEED_SPRINT = 225
 
 var _last_position: Vector2
 var _is_interacting: bool
+var _prev_npc_move_speed = null
 
 func _process(_delta):
 	var velocity = Vector2.ZERO
@@ -74,25 +75,42 @@ func _physics_process(_delta):
 		move_and_slide()
 	
 
-func set_up_interact_timer():
+func interact():
+	var interactable = get_nearest_interactable()
+	if interactable == null:
+		return
+	if interactable.is_in_group("npc"):
+		interact_with_npc(interactable)
+	elif interactable.is_in_group("beacon"):
+		var game = find_parent("Game")
+		game.return_to_previous_level(false)
+
+func interact_with_npc(npc):
+	_prev_npc_move_speed = npc.npc_move_speed
+	npc.npc_move_speed = 0
 	var interact_timer = Timer.new()
 	interact_timer.wait_time = 1
 	interact_timer.one_shot = true
 	interact_timer.autostart = true
 	add_child(interact_timer)
 	_is_interacting = true
-	interact_timer.timeout.connect(Callable(self, "interact_with_npc"))
+	interact_timer.timeout.connect(func(): finish_interact_with_npc(npc))
+
+
+func finish_interact_with_npc(npc):
+	npc.enter_dream()
+	_is_interacting = false
+	npc.npc_move_speed = _prev_npc_move_speed
 
 # checks input events
 func _input(event: InputEvent) -> void:
-	
 	# action - shoots
 	if event.is_action_pressed("shoot"):
 		shoot_projectile()
 	
 	# action - interact
 	if event.is_action_pressed("interact"):
-		set_up_interact_timer()
+		interact()
 	
 	# action - crouch
 	if event.is_action_pressed("crouch"):
@@ -128,22 +146,36 @@ func shoot_projectile():
 	get_parent().add_child(projectile)
 
 # checks if there are NPCs nearby and enters their dream
-func get_overlapping_npcs():
+func _get_overlapping_npcs():
 	var nearby_npcs
 	if _animated_sprite.flip_h:
 		nearby_npcs = $InteractionAreaRight.get_overlapping_bodies()
 	else:
 		nearby_npcs = $InteractionAreaLeft.get_overlapping_bodies()
-	return nearby_npcs
-	
-
-func interact_with_npc():
-	var nearby_npcs = get_overlapping_npcs()
-	_is_interacting = false
+	var new_npcs = []
 	for npc in nearby_npcs:
 		if npc.is_in_group("npc") and npc.is_dreaming:
-			npc.enter_dream()
-			return
+			new_npcs.append(npc)
+	return new_npcs
+
+func _get_interactable_bodies():
+	var nearby_bodies = $WeaponPickupArea.get_overlapping_bodies()
+	var bodies = []
+	for body in nearby_bodies:
+		if body.is_in_group("beacon"):
+			bodies.append(body)
+	return bodies
+
+func get_nearest_interactable():
+	var nearest = null
+	var bodies = _get_interactable_bodies() + _get_overlapping_npcs()
+	var nearest_dist = null
+	for body in bodies:
+		var dist = global_position.distance_to(body.global_position)
+		if nearest_dist == null or dist < nearest_dist:
+			nearest = body
+			nearest_dist = dist
+	return nearest
 
 func take_damage(amount: int):
 	health -= amount
@@ -153,7 +185,7 @@ func take_damage(amount: int):
 func die():
 	var game = find_parent("Game")
 	if len(game.level_stack):
-		game.return_to_previous_level()
+		game.return_to_previous_level(true)
 	else:
 		game.game_over()
 
@@ -166,6 +198,7 @@ func add_health():
 	health += 1
 
 func _on_weapon_pickup_area_body_entered(body: Node2D) -> void:
+	# TODO
 	if body.is_in_group("weapon"):
 		push_error("pickup must be implemented!")
 		weapon = body.instantiate_weapon()

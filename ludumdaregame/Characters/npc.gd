@@ -23,13 +23,10 @@ func set_npc_name(name: String) -> void:
 		_name_label.text = npc_name
 		_name_label.visible = true
 		if is_dreaming:
-			_name_label.modulate = Color(1, 1, 0.3)
-		#if allowed_depth == -1:
-			#_name_label.modulate = Color(1, 0, 0)
-		#if is_dreaming and allowed_depth == 0:
-			#_name_label.modulate = Color(1, 1, 0.3)
-		#if is_dreaming and allowed_depth == 1:
-			#_name_label.modulate = Color(0.5, 1, 0.5)
+			if allowed_depth == -1:
+				_name_label.modulate = Color(1, 0.3, 0.3)
+			else:
+				_name_label.modulate = Color(1, 1, 0.3)
 
 func _process(_delta):
 	var velocity = (global_position - _last_position) / _delta
@@ -43,20 +40,13 @@ func _process(_delta):
 			_animated_sprite.play("default")
 	_last_position = global_position
 	
-	var players = get_tree().get_nodes_in_group("player")
-	if len(players) > 0:
-		var player = players[0]
-		var npcs = player.get_overlapping_npcs()
-		var is_overlapping = false
-		for i in npcs:
-			if i == self:
-				is_overlapping = true
-				break
-		if is_overlapping:
-			_animated_interaction.play("default")
-			_animated_interaction.show()
-		else:
-			_animated_interaction.hide()
+	var player = get_node("../Player")
+	var nearest = player.get_nearest_interactable()
+	if nearest == self:
+		_animated_interaction.play("default")
+		_animated_interaction.show()
+	else:
+		_animated_interaction.hide()
 
 func _body_entered(body: Node2D)->void:
 	print(body)

@@ -1,3 +1,61 @@
-[gd_scene format=3 uid="uid://ch3d2bblffjwm"]
+[gd_scene load_steps=10 format=3 uid="uid://ch3d2bblffjwm"]
 
-[node name="Beacon" type="Node2D"]
+[ext_resource type="Script" uid="uid://waynn8n8vk1q" path="res://Collectibles/beacon.gd" id="1_gpd2j"]
+[ext_resource type="Texture2D" uid="uid://f66vepbglclh" path="res://Assets/Tilesets/forest_tileset.png" id="2_sxkyb"]
+[ext_resource type="Texture2D" uid="uid://q1enyo0l6t25" path="res://Assets/UI/interact.png" id="3_1fld8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ll2h2"]
+atlas = ExtResource("2_sxkyb")
+region = Rect2(128, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_23d8r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ll2h2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqs5k"]
+atlas = ExtResource("3_1fld8")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_025b5"]
+atlas = ExtResource("3_1fld8")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3yill"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqs5k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_025b5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpd2j"]
+size = Vector2(14, 14)
+
+[node name="StaticBody2D" type="StaticBody2D" groups=["beacon"]]
+z_index = -1
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("1_gpd2j")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_23d8r")
+
+[node name="AnimatedInteraction" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -17)
+sprite_frames = SubResource("SpriteFrames_3yill")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gpd2j")

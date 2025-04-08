@@ -19,7 +19,7 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("prev_level_tmp"): # Escape
-		return_to_previous_level()
+		return_to_previous_level(false)
 	if event.is_action_pressed("exit"): # Escape
 		get_tree().change_scene_to_file("res://Scenes/MainMenu.tscn")
 
@@ -52,12 +52,13 @@ func enter_level(level_name, npc):
 	if len(level_stack) > max_dream_depth:
 		max_dream_depth = len(level_stack)
 
-func return_to_previous_level():
+func return_to_previous_level(take_damage):
 	if level_stack.size() > 0:
 		var previous_level = level_stack.pop_back()
 		change_level(current_level, previous_level)
 		current_level = previous_level
-		level_map[current_level].find_child("Player").take_damage(DMG_EXIT_LEVEL)
+		if take_damage:
+			level_map[current_level].find_child("Player").take_damage(DMG_EXIT_LEVEL)
 
 func game_over():
 	var game_over_layer: Control = $GameInterfaceCanvas/MarginContainer/GameOver

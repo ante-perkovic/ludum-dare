@@ -19,6 +19,7 @@ func create_level(current_depth, allowed_depth):
 	var enemy_scene = preload("res://Characters/enemy.tscn")
 	var coin_scene = preload("res://Collectibles/Coin/coin.tscn")
 	var heart_scene = preload("res://Collectibles/Heart/Heart.tscn")
+	var beacon_scene = preload("res://Collectibles/beacon.tscn")
 	var weapon_scenes = [
 		preload("res://Weapons/AssaultRifle.tscn"),
 		preload("res://Weapons/Shotgun.tscn"),
@@ -73,16 +74,24 @@ func create_level(current_depth, allowed_depth):
 	spawn_npcs(npc_scene, floor_tiles, backgroundLayer, number_of_normal_npc, false, 0, 0)
 
 	# Spawn enemies
-	spawn_enemies(enemy_scene, floor_tiles, backgroundLayer, player.global_position, randi() % 6 + 3, 4)
+	spawn_objects(enemy_scene, floor_tiles, backgroundLayer, player.global_position, randi() % 6 + 3, 4)
 	
 	# Spawn weapons
 	# spawn_weapons(weapon_scenes.pick_random(), floor_tiles, backgroundLayer, player.global_position, 2, 4)
 	
 	# Spawn coins
-	spawn_coins(coin_scene, floor_tiles, backgroundLayer, player.global_position, 20, 3)
 	
-	# spawn hears
-	spawn_hearts(heart_scene, floor_tiles, backgroundLayer, player.global_position, 4, 3)
+	var number_of_beacons
+	if current_depth <= 1:
+		number_of_beacons = 0
+	else:
+		number_of_beacons = randi_range(1,3)
+	var number_of_hearts = randi_range(2,6)
+	var number_of_coins = current_depth + randi_range(5,20)
+	
+	spawn_objects(coin_scene, floor_tiles, backgroundLayer, player.global_position, number_of_coins, 3)
+	spawn_objects(heart_scene, floor_tiles, backgroundLayer, player.global_position, number_of_hearts, 3)
+	spawn_objects(beacon_scene, floor_tiles, backgroundLayer, player.global_position, number_of_beacons, 3)
 
 func set_random_name_list() -> void:
 	var name_lists = [
@@ -114,10 +123,11 @@ func spawn_npcs(npc_scene, floor_tiles, tile_map, count: int, is_dreaming:bool, 
 		npc.global_position = tile_map.map_to_local(get_random_floor_tile(floor_tiles))
 		add_child(npc)
 
-func spawn_enemies(enemy_scene, floor_tiles, tile_map, player_pos: Vector2, count: int, min_distance: float) -> void:
+
+func spawn_objects(scene, floor_tiles, tile_map, player_pos, count, min_distance):
 	for i in count:
 		if floor_tiles.is_empty(): break
-		var enemy = enemy_scene.instantiate()
+		var obj = scene.instantiate()
 		var pos: Vector2i
 
 		while true:
@@ -126,50 +136,5 @@ func spawn_enemies(enemy_scene, floor_tiles, tile_map, player_pos: Vector2, coun
 			var dist = player_pos.distance_to(tile_map.map_to_local(pos)) / tile_map.tile_set.tile_size.x
 			if dist > min_distance:
 				break
-		enemy.global_position = tile_map.map_to_local(pos)
-		add_child(enemy)
-
-func spawn_coins(coin_scene, floor_tiles, tile_map, player_pos, count, min_distance):
-	for i in count:
-		if floor_tiles.is_empty(): break
-		var coin = coin_scene.instantiate()
-		var pos: Vector2i
-
-		while true:
-			if floor_tiles.is_empty(): break
-			pos = get_random_floor_tile(floor_tiles)
-			var dist = player_pos.distance_to(tile_map.map_to_local(pos)) / tile_map.tile_set.tile_size.x
-			if dist > min_distance:
-				break
-		coin.global_position = tile_map.map_to_local(pos)
-		add_child(coin)
-
-func spawn_weapons(weapon_scene, floor_tiles, tile_map, player_pos, count, min_distance):
-	for i in count:
-		if floor_tiles.is_empty(): break
-		var weapon = weapon_scene.instantiate()
-		var pos: Vector2i
-
-		while true:
-			if floor_tiles.is_empty(): break
-			pos = get_random_floor_tile(floor_tiles)
-			var dist = player_pos.distance_to(tile_map.map_to_local(pos)) / tile_map.tile_set.tile_size.x
-			if dist > min_distance:
-				break
-		weapon.global_position = tile_map.map_to_local(pos)
-		add_child(weapon)
-
-func spawn_hearts(heart_scene, floor_tiles, tile_map, player_pos, count, min_distance):
-	for i in count:
-		if floor_tiles.is_empty(): break
-		var health = heart_scene.instantiate()
-		var pos: Vector2i
-
-		while true:
-			if floor_tiles.is_empty(): break
-			pos = get_random_floor_tile(floor_tiles)
-			var dist = player_pos.distance_to(tile_map.map_to_local(pos)) / tile_map.tile_set.tile_size.x
-			if dist > min_distance:
-				break
-		health.global_position = tile_map.map_to_local(pos)
-		add_child(health)
+		obj.global_position = tile_map.map_to_local(pos)
+		add_child(obj)
