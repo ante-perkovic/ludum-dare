@@ -7,11 +7,13 @@ var current_level: int = 0
 var LevelScene = preload("Level.tscn")
 var score: int = 0
 var max_dream_depth: int = 0
+var health: int = 100
 
 var SCORE_KILL = 20
 var SCORE_COIN = 10
 var SCORE_DREAM = 30
 var DMG_EXIT_LEVEL = 20
+var HEAL_AMMOUNT = 20
 
 func _ready():
 	# Start the first level
@@ -42,7 +44,7 @@ func enter_level(level_name, npc):
 			new_level.create_level(1, -1)
 	else:
 		new_level = level_map[level_name]
-		new_level.find_child("Player").health = 100
+		#new_level.find_child("Player").health = 100
 		# TODO manje bitno: Mozda teleportirati igraca
 	current_level = level_name
 	if previous_level:

@@ -7,8 +7,10 @@ var theme_list = [ "forest", "inferno", "disco"]
 
 var allowed_names = null
 var theme_id = null
+var current_depth = null
+var allowed_depth = null
 
-func create_level(current_depth, allowed_depth):
+func create_level(_current_depth, _allowed_depth):
 	# Current depth will determine how hard is the level, allowed depth is used
 	# for side quest NPC, use -1 if the main level
 	var level_generator = get_node("LevelGenerator")
@@ -25,6 +27,9 @@ func create_level(current_depth, allowed_depth):
 		preload("res://Weapons/Shotgun.tscn"),
 	]
 	var background_margin = 100
+	current_depth = _current_depth
+	allowed_depth = _allowed_depth
+	
 
 	var floor_tiles: Array[Vector2i] = []
 	var level_tiles = level_generator.generate_level_tiles()
@@ -118,7 +123,10 @@ func spawn_npcs(npc_scene, floor_tiles, tile_map, count: int, is_dreaming:bool, 
 		npc.current_depth = current_depth
 		var npc_name = allowed_names[randi() % allowed_names.size()]
 		npc.set_npc_name(npc_name)	
-		npc.allowed_depth = randi_range(0, allowed_depth)
+		if allowed_depth == -1:
+			npc.allowed_depth = -1
+		else:
+			npc.allowed_depth = randi_range(0, allowed_depth)
 		npc.is_dreaming = is_dreaming
 		npc.global_position = tile_map.map_to_local(get_random_floor_tile(floor_tiles))
 		add_child(npc)

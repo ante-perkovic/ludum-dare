@@ -2,8 +2,7 @@ extends CharacterBody2D
 @export var projectile_scene: PackedScene = preload("res://Characters/projectile.tscn")
 @export var weapon = preload("res://Weapons/Gun.tscn").instantiate()
 
-
-var health: int = 100
+@onready var game = get_node("/root/Game")
 var coins: int = 0
 
 @export var player_move_speed: float = 150
@@ -54,7 +53,7 @@ func _ready():
 
 func _physics_process(_delta):
 	#Get input direction
-	if health <= 0:
+	if game.health <= 0:
 		return
 	var input_direction = Vector2(
 		Input.get_action_strength("right") - Input.get_action_strength("left"),
@@ -82,7 +81,6 @@ func interact():
 	if interactable.is_in_group("npc"):
 		interact_with_npc(interactable)
 	elif interactable.is_in_group("beacon"):
-		var game = find_parent("Game")
 		game.return_to_previous_level(false)
 
 func interact_with_npc(npc):
@@ -178,24 +176,19 @@ func get_nearest_interactable():
 	return nearest
 
 func take_damage(amount: int):
-	health -= amount
-	if health <= 0:
+	game.health -= amount
+	if game.health <= 0:
 		die()
 
 func die():
-	var game = find_parent("Game")
-	if len(game.level_stack):
-		game.return_to_previous_level(true)
-	else:
-		game.game_over()
+	game.game_over()
 
 func add_coin():
 	coins += 1
-	var game = find_parent("Game")
 	game.score += game.SCORE_COIN
 
 func add_health():
-	health += 1
+	game.health += game.HEAL_AMMOUNT
 
 func _on_weapon_pickup_area_body_entered(body: Node2D) -> void:
 	# TODO

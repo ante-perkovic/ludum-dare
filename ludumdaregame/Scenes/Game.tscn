@@ -38,12 +38,6 @@ offset_left = -200.0
 offset_bottom = 142.0
 grow_horizontal = 0
 
-[node name="DreamDepthLabel" type="Label" parent="GameInterfaceCanvas/MarginContainer/GameInterface/TopRightBox"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "Dream depth: 5"
-
 [node name="ScoreLabel" type="Label" parent="GameInterfaceCanvas/MarginContainer/GameInterface/TopRightBox"]
 layout_mode = 2
 size_flags_horizontal = 0
