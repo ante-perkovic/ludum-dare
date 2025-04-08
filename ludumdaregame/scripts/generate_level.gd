@@ -1,7 +1,7 @@
 extends Node
 
-const ROOM_FILE_BIG = "res://Assets/Rooms/big_rooms.txt"
-const ROOM_FILE_SMALL = "res://Assets/Rooms/small_rooms.txt"
+const ROOM_FILE_BIG = "./Assets/Rooms/big_rooms.txt"
+const ROOM_FILE_SMALL = "./Assets/Rooms/small_rooms.txt"
 
 var BIG_ROOMS = []
 var SMALL_ROOMS = []

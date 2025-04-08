@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ludumDareGame"
-run/main_scene="uid://cmkgwb33fuov"
+run/main_scene="uid://cvwntj64ejj5k"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
