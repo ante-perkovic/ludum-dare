@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://dx87e7w20lo70"]
+
+[ext_resource type="Script" uid="uid://bnr2kksqyloh1" path="res://Weapons/Ak47.gd" id="1_nfp6k"]
+[ext_resource type="Texture2D" uid="uid://b37yj21a2i5ax" path="res://Assets/characters.png" id="2_nfp6k"]
+[ext_resource type="AudioStream" uid="uid://gkn1h743sk3n" path="res://Assets/Audio/coin-collect.mp3" id="3_hju6b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hju6b"]
+atlas = ExtResource("2_nfp6k")
+region = Rect2(144, 176, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_27juv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hju6b")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_27juv"]
+
+[node name="Ak47" type="Node2D"]
+script = ExtResource("1_nfp6k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_27juv")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_hju6b")
+volume_db = -34.667
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_27juv")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

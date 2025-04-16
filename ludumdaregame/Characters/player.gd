@@ -30,27 +30,38 @@ func _process(_delta):
 	elif Input.is_action_pressed("up"):
 		velocity.y -= 1
 		
+	if Input.is_action_pressed("shoot"):
+		shoot_projectile()
+		
 	if abs(velocity.x) > 0.1:
 		_animated_sprite.flip_h = velocity.x > 0
 	if _is_interacting:
 		_animated_sprite.play("interact")
 	else:
 		if velocity.length() > 0.1:
-			if _animated_sprite.animation != "running":
-				_animated_sprite.play("running")
+			if _animated_sprite.animation != weapon.weapon_name + "-running":
+				_animated_sprite.play(weapon.weapon_name + "-running")
 		else:
-			if _animated_sprite.animation != "default":
-				_animated_sprite.play("default")
+			if _animated_sprite.animation != weapon.weapon_name + "-default":
+				_animated_sprite.play(weapon.weapon_name + "-default")
 	
 	_last_position = global_position
 
 func _ready():
 	_last_position = global_position
-	
 	# give player a GUN
-	weapon = preload("res://Weapons/Gun.tscn").instantiate()
-	
 	add_child(weapon)
+	
+	weapon.hide()
+	
+func has_weapon_of_type(scene: PackedScene) -> bool:
+	return weapon != null and weapon.scene_file_path == scene.resource_path
+	
+func set_weapon(new_weapon: Node) -> void:
+	if weapon:
+		weapon.queue_free()
+	weapon = new_weapon
+	add_child(weapon)  # Or add to a specific node like $WeaponSlot
 	
 	weapon.hide()
 
@@ -108,9 +119,6 @@ func finish_interact_with_npc(npc):
 func _input(event: InputEvent) -> void:
 	if game.health <= 0:
 		return
-	# action - shoots
-	if event.is_action_pressed("shoot"):
-		shoot_projectile()
 	
 	# action - interact
 	if event.is_action_pressed("interact"):
@@ -127,18 +135,21 @@ func _input(event: InputEvent) -> void:
 		
 # function for shooting
 func shoot_projectile():
-	if weapon.fire() == false:
+	if weapon.can_fire == false:
 		return
 	
+	weapon.can_fire = false
+	
+	var shoot_timer = Timer.new()
+	shoot_timer.wait_time = 1.0 / weapon.rate_of_fire
+	shoot_timer.one_shot = true
+	shoot_timer.autostart = true
+	shoot_timer.timeout.connect(Callable(weapon, "reload"))
+	add_child(shoot_timer)
+		
 	# create projectile and set its position
-	var projectile = projectile_scene.instantiate()
-	get_parent().add_child(projectile)
-	projectile.source = self
-	var target: Vector2 = get_global_mouse_position()
-	var direction: Vector2 = (target-global_position).normalized()
-	var rng = RandomNumberGenerator.new()
-	direction = direction.rotated(deg_to_rad(rng.randf_range(-weapon.spread_angle_degrees, weapon.spread_angle_degrees)))
-	projectile.transform = Transform2D(direction.angle(), $AnimatedSprite2D/GunPosition.global_position)
+	weapon.shoot()
+	
 
 
 func _get_interactable_bodies():

@@ -6,6 +6,9 @@ var speed = 340
 
 var moved = false
 
+func _ready():
+	add_to_group("bullet")
+
 func _physics_process(delta):
 	position += transform.x * speed * delta
 	if not moved:
@@ -17,6 +20,8 @@ func _physics_process(delta):
 func _on_bullet_body_entered(_body: Node2D):
 	var body = _body.get_parent()  # We set up bodies 
 	if body == source:
+		return
+	if _body.is_in_group("bullet") or body.is_in_group("gun"):
 		return
 	if body.is_in_group("enemy") or body.is_in_group("player"):
 		body.take_damage(20)

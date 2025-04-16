@@ -21,8 +21,8 @@ func create_level(_current_depth, _allowed_depth):
 	var backgroundLayer: TileMapLayer = get_node("BackgroundLayer")
 	var foregroundLayer: TileMapLayer = get_node("ForegroundLayer")
 	var weapon_scenes = [
-		preload("res://Weapons/AssaultRifle.tscn"),
-		preload("res://Weapons/Shotgun.tscn"),
+			preload("res://Weapons/Shotgun.tscn"),
+			preload("res://Weapons/Ak47.tscn"),
 	]
 	var background_margin = 100
 	current_depth = _current_depth
@@ -105,7 +105,7 @@ func create_level(_current_depth, _allowed_depth):
 
 	spawn_objects(beacon_scene, floor_tiles, backgroundLayer, player.global_position, number_of_beacons, 3)
 	spawn_objects(enemy_scene, floor_tiles, backgroundLayer, player.global_position, number_of_enemies, 4)
-	# spawn_weapons(weapon_scenes.pick_random(), floor_tiles, backgroundLayer, player.global_position, 2, 4)
+	spawn_objects(weapon_scenes.pick_random(), floor_tiles, backgroundLayer, player.global_position, 2, 4)
 	spawn_objects(heart_scene, floor_tiles, backgroundLayer, player.global_position, number_of_hearts, 3)
 	spawn_objects(coin_scene, floor_tiles, backgroundLayer, player.global_position, number_of_coins, 3)
 	

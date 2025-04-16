@@ -28,7 +28,7 @@ debug_color = Color(0.939871, 0.168677, 0.454205, 0.42)
 
 [node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_n0cff")
-volume_db = -5.0
+volume_db = -27.961
 max_distance = 800.0
 attenuation = 2.0
 
