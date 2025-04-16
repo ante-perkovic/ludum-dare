@@ -4,7 +4,7 @@ extends Node2D
 @export var weapon_scene: PackedScene = preload("res://Weapons/Shotgun.tscn")
 
 @export var damage: int = 10
-@export var rate_of_fire: int = 0.8
+@export var rate_of_fire: float = 0.8
 @export var spread_angle_degrees: float = 5.0
 @export var weapon_name: String = 'shotgun'
 
